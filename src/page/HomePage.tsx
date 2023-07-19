@@ -8,9 +8,9 @@ import {
   Text,
   TextInput,
   TouchableHighlight,
-  View
+  View,
 } from 'react-native'
-
+import useStickyHeader from '../hooks/useStickyHeader'
 const Stack = createNativeStackNavigator()
 
 export const HomePage = () => {
@@ -28,7 +28,7 @@ export const HomePage = () => {
           initialParams={{
             hostName: 'Austyn',
           }}
-          options={{ headerShown: false }}
+          // options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Details"
@@ -47,45 +47,9 @@ export const HomePage = () => {
 }
 
 function HomeScreen({ navigation }) {
-  const scrollY = React.useRef(new Animated.Value(0)).current
-
-  const handleScroll = Animated.event(
-    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-    { useNativeDriver: true },
-  )
-
-  const translateY = scrollY.interpolate({
-    inputRange: [-1, 0, 200, 201],
-    outputRange: [0, 0, 0, 1],
-  })
-  React.useEffect(() => {
-    console.log(translateY)
-  }, [{ translateY }])
   return (
     <View style={{ flex: 1 }}>
-      <Animated.ScrollView
-        style={{
-          flex: 1,
-          backgroundColor: 'pink',
-        }}
-        onScroll={handleScroll}
-        scrollEventThrottle={16} // 调整滚动事件的触发频率
-      >
-        <MainContainer />
-        <Animated.View style={[{ zIndex: 100, transform: [{ translateY }] }]}>
-          <SearchContainer />
-        </Animated.View>
-        <Text>hello</Text>
-        <View>
-          <MainContainer />
-          <MainContainer />
-          <MainContainer />
-          <MainContainer />
-          <MainContainer />
-          <MainContainer />
-          <MainContainer />
-        </View>
-      </Animated.ScrollView>
+      <MainContainer />
     </View>
   )
 }
@@ -121,7 +85,7 @@ function DetailsScreen({ navigation }) {
 
 function MainContainer() {
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <LogoContainer />
       <SearchContainer />
     </View>
@@ -134,8 +98,7 @@ function SearchContainer() {
   return (
     <View
       style={{
-        height: 40,
-        margin: 20,
+        backgroundColor: '#F2F2F2',
       }}
     >
       <TextInput
@@ -145,6 +108,8 @@ function SearchContainer() {
           borderWidth: 1,
           borderStyle: 'solid',
           borderRadius: 15,
+          height: 40,
+          margin: 20,
         }}
         placeholder="搜索或输入网址"
         value={searchText}
@@ -178,8 +143,23 @@ function LogoContainer() {
 }
 
 function Header({ navigation }) {
+  const scrollY = React.useRef(new Animated.Value(0)).current
+  const { StickyHeader } = useStickyHeader()
   return (
-    <>
+    <Animated.ScrollView
+      style={{
+        flex: 1,
+      }}
+      onScroll={Animated.event(
+        [
+          {
+            nativeEvent: { contentOffset: { y: scrollY } },
+          },
+        ],
+        { useNativeDriver: true },
+      )}
+      scrollEventThrottle={1} // 调整滚动事件的触发频率
+    >
       <View
         style={{
           width: '100%',
@@ -193,8 +173,21 @@ function Header({ navigation }) {
         <WeatherForcast navigation={navigation} />
         <AddNews navigation={navigation} />
       </View>
-      <MainContainer />
-    </>
+      <StickyHeader stickyScrollY={scrollY}>
+        <SearchContainer />
+      </StickyHeader>
+      <LogoContainer />
+      <LogoContainer />
+      <LogoContainer />
+      <LogoContainer />
+      <LogoContainer />
+      <LogoContainer />
+      <LogoContainer />
+      <LogoContainer />
+      <LogoContainer />
+      <LogoContainer />
+      <LogoContainer />
+    </Animated.ScrollView>
   )
 }
 
