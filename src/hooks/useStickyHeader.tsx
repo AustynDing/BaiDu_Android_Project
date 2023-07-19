@@ -75,3 +75,6 @@ ForwardStickyHeader.displayName = 'StickyHeader'
 export default function useStickyHeader() {
   return { StickyHeader }
 }
+/**
+ * 参考:https://github.com/jiasongs/react-native-stickyheader
+ */
