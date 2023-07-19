@@ -1,26 +1,26 @@
-import React from 'react';
+import React from 'react'
 import {
-  ScrollView,
   RefreshControl,
+  SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
-  SafeAreaView,
-} from 'react-native';
+} from 'react-native'
 
 const wait = (timeout: number) => {
   return new Promise(resolve => {
-    setTimeout(resolve, timeout);
-  });
+    setTimeout(resolve, timeout)
+  })
 }
 
 export const RefereshControlDemo = () => {
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false)
 
   const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
+    setRefreshing(true)
 
-    wait(2000).then(() => setRefreshing(false));
-  }, []);
+    wait(2000).then(() => setRefreshing(false))
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -33,7 +33,7 @@ export const RefereshControlDemo = () => {
         <Text>Pull down to see RefreshControl indicator</Text>
       </ScrollView>
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})

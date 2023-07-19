@@ -22,7 +22,7 @@ import {
   Image
 } from 'react-native';
 import { Avatar } from '@rneui/themed'
-import { ModalDemo, RefereshControlDemo, MyTabs } from './components'
+import { ModalDemo, RefereshControlDemo, MyTabs } from './src/components'
 import {
   Colors,
   Header,
@@ -31,20 +31,6 @@ import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-na
 import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-
-
-function LogoTitle(props: any){
-  return (
-    <Image
-      style={{ 
-        width: 50,
-        height: 50,
-        backgroundColor: 'red'
-      }}
-      source={require('D:\\Android_Learn\\AwesomeProject\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png')}
-    />
-  );
-}
 
 function Section({ children, title }: SectionProps): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -82,31 +68,31 @@ function App(): JSX.Element {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <MyTabs/>
-    </NavigationContainer>
+        <MyTabs />
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 }
 
-    // <SafeAreaView style={backgroundStyle}>
-    //   <StatusBar
-    //     barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-    //     backgroundColor={backgroundStyle.backgroundColor}
-    //   />
-    //   <ScrollView
-    //     contentInsetAdjustmentBehavior="automatic"
-    //     style={backgroundStyle}>
-    //     <Header />
-    //     <View
-    //       style={{
-    //         backgroundColor: isDarkMode ? Colors.black : Colors.white,
-    //       }}>
-    //       <YourApp />
-    //     </View>
-    //     <RefereshControlDemo/>
-    //     {/* <ModalDemo/> */}
-    //   </ScrollView>
-    // </SafeAreaView>
+// <SafeAreaView style={backgroundStyle}>
+//   <StatusBar
+//     barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+//     backgroundColor={backgroundStyle.backgroundColor}
+//   />
+//   <ScrollView
+//     contentInsetAdjustmentBehavior="automatic"
+//     style={backgroundStyle}>
+//     <Header />
+//     <View
+//       style={{
+//         backgroundColor: isDarkMode ? Colors.black : Colors.white,
+//       }}>
+//       <YourApp />
+//     </View>
+//     <RefereshControlDemo/>
+//     {/* <ModalDemo/> */}
+//   </ScrollView>
+// </SafeAreaView>
 
 const YourApp = () => {
   return (

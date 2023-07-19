@@ -68,12 +68,19 @@ You've successfully run and modified your React Native App. :partying_face:
 
 If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
 
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+# dependence
+```json
+      "dependencies": {
+        "@react-navigation/bottom-tabs": "^6.5.8",
+        "@react-navigation/native": "^6.1.7", // 用于导航的配置
+        "@react-navigation/native-stack": "^6.9.13",
+        "@rneui/base": "^4.0.0-rc.7", // React Native Elements UI组件库
+        "@rneui/themed": "^4.0.0-rc.7",
+        "expo": "^49.0.3",
+        "react": "18.2.0",
+        "react-native": "0.72.3",
+        "react-native-safe-area-context": "^4.7.1",
+        "react-native-screens": "^3.22.1",
+        "react-native-vector-icons": "^10.0.0" // 图标库的配置，默认使用font-awesome
+      },
+```
