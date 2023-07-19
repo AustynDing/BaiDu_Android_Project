@@ -1,7 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
 import { Button, Text, View } from 'react-native'
-
 import { Avatar } from '@rneui/base'
 
 const Stack = createNativeStackNavigator()

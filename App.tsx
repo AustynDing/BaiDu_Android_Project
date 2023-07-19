@@ -5,58 +5,24 @@
  * @format
  */
 
+import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import type { PropsWithChildren } from 'react';
 import {
   Button,
   FlatList,
   Platform,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   TextInput,
-  useColorScheme,
   View,
-  Image
+  useColorScheme
 } from 'react-native';
-import { Avatar } from '@rneui/themed'
-import { ModalDemo, RefereshControlDemo, MyTabs } from './src/components'
-import {
-  Colors,
-  Header,
-} from 'react-native/Libraries/NewAppScreen';
-import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { NavigationContainer, RouteProp } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {
+  Colors
+} from 'react-native/Libraries/NewAppScreen';
+import { MyTabs } from './src/components';
 
-
-function Section({ children, title }: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';

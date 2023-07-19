@@ -1,12 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { NavigationContainer } from '@react-navigation/native'
-import * as React from 'react'
-import { Text, View } from 'react-native'
-
 import { Icon } from '@rneui/base'
-
-import { MaterialCommunityIcons } from '@expo/vector-icons'
-
+import React from 'react'
+import { Text, View } from 'react-native'
 import { HomePage } from '../page/HomePage'
 
 function Feed() {
