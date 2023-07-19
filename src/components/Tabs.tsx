@@ -1,72 +1,50 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Icon } from '@rneui/base'
 import React from 'react'
-import { Text, View } from 'react-native'
-import { HomePage } from '../page/HomePage'
-
-function Feed() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Feed!</Text>
-    </View>
-  )
-}
-
-function Profile() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Profile!</Text>
-    </View>
-  )
-}
-
-function Notifications() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Notifications!</Text>
-    </View>
-  )
-}
-
+import { HomePage, ProfilePage, TabPage, VideoPage } from '../page'
 const Tab = createBottomTabNavigator()
 
 export const MyTabs = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Feed"
+      initialRouteName="Home"
       screenOptions={{
-        tabBarActiveTintColor: '#e91e63',
+        tabBarActiveTintColor: '#333333',
+        tabBarInactiveTintColor: '#B0B1B3',
+        
       }}
     >
       <Tab.Screen
-        name="Feed"
+        name={TabPage.HOME_PAGE}
         component={HomePage}
         options={{
-          headerShown: false,
-          tabBarLabel: 'Home',
+          tabBarLabel: TabPage.HOME_PAGE,
           tabBarIcon: ({ color, size }) => (
             <Icon type="font-awesome" name="home" color={color} size={size} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
-        name="Notifications"
-        component={Notifications}
+        name={TabPage.VIDEO_PAGE}
+        component={VideoPage}
         options={{
-          tabBarLabel: 'Updates',
+          tabBarLabel: TabPage.VIDEO_PAGE,
           tabBarIcon: ({ color, size }) => (
-            <Icon type="font-awesome" name="bell" color={color} size={size} />
+            <Icon type="font-awesome" name="play-circle" color={color} size={size} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name={TabPage.PROFILE_PAGE}
+        component={ProfilePage}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: TabPage.PROFILE_PAGE,
           tabBarIcon: ({ color, size }) => (
-            <Icon type="font-awesome" name="star" color={color} size={size} />
+            <Icon type="font-awesome" name="user" color={color} size={size} />
           ),
+          headerShown: false,
         }}
       />
     </Tab.Navigator>
