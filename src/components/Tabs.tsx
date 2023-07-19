@@ -11,7 +11,6 @@ export const MyTabs = () => {
       screenOptions={{
         tabBarActiveTintColor: '#333333',
         tabBarInactiveTintColor: '#B0B1B3',
-        
       }}
     >
       <Tab.Screen
@@ -31,7 +30,12 @@ export const MyTabs = () => {
         options={{
           tabBarLabel: TabPage.VIDEO_PAGE,
           tabBarIcon: ({ color, size }) => (
-            <Icon type="font-awesome" name="play-circle" color={color} size={size} />
+            <Icon
+              type="font-awesome"
+              name="play-circle"
+              color={color}
+              size={size}
+            />
           ),
           headerShown: false,
         }}

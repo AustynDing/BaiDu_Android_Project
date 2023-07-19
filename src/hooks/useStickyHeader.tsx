@@ -1,6 +1,1 @@
-
-
-
-export function useStickHeader(props){
-    
-}
+export function useStickHeader(props) {}
