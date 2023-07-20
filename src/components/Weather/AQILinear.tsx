@@ -27,7 +27,7 @@ export function AQILinear() {
       Math.floor(layout.width * airColors.length),
       Math.floor((marginLeftValue / 50) * layout.width),
     )
-  }, [marginLeftValue])
+  }, [marginLeftValue, layout.width])
 
   const handleIndicatorColor = React.useCallback((value: number) => {
     const index = thresholds.findIndex(threshold => value <= threshold)
@@ -38,8 +38,8 @@ export function AQILinear() {
     <View style={styles.container}>
       <View style={[styles.indicatorContainer]}>
         <Text style={styles.text}>0</Text>
-        {thresholds.map(value => (
-          <Text style={styles.text} onLayout={onLayoutHandler}>
+        {thresholds.map((value, index) => (
+          <Text key={index} style={styles.text} onLayout={onLayoutHandler}>
             {value}
           </Text>
         ))}
