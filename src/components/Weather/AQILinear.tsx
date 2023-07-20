@@ -13,18 +13,22 @@ export function AQILinear() {
   ]
   const thresholds = [50, 100, 150, 200, 250]
   const [marginLeftValue, setMarginLeftValue] = React.useState(0)
-  const [layout,setLayout] = React.useState({width: 0, height:0})
-  const onLayoutHandler = (event) => {
-    const { width, height } = event.nativeEvent.layout;
-    setLayout({ width, height });
-  };
+  const [layout, setLayout] = React.useState({ width: 0, height: 0 })
+  const onLayoutHandler = event => {
+    const { width, height } = event.nativeEvent.layout
+    setLayout({ width, height })
+  }
   React.useEffect(() => {
-      setMarginLeftValue(weatherData.AQI)
+    setMarginLeftValue(weatherData.AQI)
   }, [weatherData.AQI])
 
   const valueToOffset = React.useMemo(() => {
-    return Math.min(Math.floor(layout.width * airColors.length),Math.floor(marginLeftValue / 50 * layout.width))
-  },[marginLeftValue])
+    return Math.min(
+      Math.floor(layout.width * airColors.length),
+      Math.floor((marginLeftValue / 50) * layout.width),
+    )
+  }, [marginLeftValue])
+
   const handleIndicatorColor = React.useCallback((value: number) => {
     const index = thresholds.findIndex(threshold => value < threshold)
     return index === -1 ? airColors[5] : airColors[index]
@@ -32,15 +36,13 @@ export function AQILinear() {
 
   return (
     <View style={styles.container}>
-      {/* <Divider dividerHeight={20} /> */}
-      <Text
-        style={[styles.text, { marginLeft: 10, fontSize: 18, marginTop: 10 }]}
-      >
-        今日空气质量
-      </Text>
       <View style={[styles.indicatorContainer]}>
-      <Text style={styles.text}>0</Text>
-        {thresholds.map((value) => <Text style={styles.text} onLayout={onLayoutHandler}>{value}</Text>)}
+        <Text style={styles.text}>0</Text>
+        {thresholds.map(value => (
+          <Text style={styles.text} onLayout={onLayoutHandler}>
+            {value}
+          </Text>
+        ))}
       </View>
       <View style={styles.indicatorContainer}>
         {airColors.map((color, index) => (
@@ -61,31 +63,14 @@ export function AQILinear() {
             },
           ]}
         />
-        <Text style={styles.indicatorText}>{marginLeftValue}</Text>
       </View>
-      {/* <View style={styles.detailColumnContainer}>
-                <View style={styles.detailRowContainer}>
-                    <AqiItem index={0} />
-                    <AqiItem index={1} />
-                </View>
-                <View style={styles.detailRowContainer}>
-                    <AqiItem index={2} />
-                    <AqiItem index={3} />
-                </View>
-                <View style={styles.detailRowContainer}>
-                    <AqiItem index={4} />
-                    <AqiItem index={5} />
-                </View>
-            </View>
-            <Divider dividerHeight={20} /> */}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 20,
+    height: 50,
   },
   indicatorContainer: {
     flex: 1,
@@ -93,8 +78,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: 15,
     marginRight: 15,
-    marginTop: 10,
-    backgroundColor: 'pink',
   },
   indicator: {
     flex: 1,

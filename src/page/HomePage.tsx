@@ -5,21 +5,26 @@ import {
   Animated,
   Button,
   FlatList,
-  Image,
   StyleSheet,
   Text,
   TextInput,
   TouchableHighlight,
   View,
 } from 'react-native'
-import useStickyHeader from '../hooks/useStickyHeader'
 import {
+  AdvancedNewsItem,
+  AdvancedNewsType,
   Data,
   NormalNewsItem,
-  AdvancedNewsItem,
   NormalNewsType,
-  AdvancedNewsType,
 } from '../components/News'
+import {
+  mapAQIToPollutionLevel,
+  weatherData,
+  weatherToDescriptionMap,
+} from '../components/Weather/data'
+import useStickyHeader from '../hooks/useStickyHeader'
+import { WeatherPage } from './WeatherPage'
 const Stack = createNativeStackNavigator()
 
 export const HomePage = () => {
@@ -32,8 +37,8 @@ export const HomePage = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Home"
-          component={HomeScreen}
+          name="Weather"
+          component={WeatherPage}
           initialParams={{
             hostName: 'Austyn',
           }}
@@ -233,19 +238,13 @@ interface WeatherInfo {
   airQuality: AirQuality
 }
 function WeatherForcast({ navigation }) {
-  const [weatherInfo, setWeatherInfo] = React.useState<WeatherInfo>({
-    temperature: 18,
-    weather: '晴',
-    position: '北京',
-    airQualityIndex: 88,
-    airQuality: '优',
-  })
+  const { position, temperature, AQI, nowWeather } = weatherData
   return (
     <>
       <TouchableHighlight
         activeOpacity={0.6}
         underlayColor="#DDDDDD"
-        onPress={() => navigation.push('Details')}
+        onPress={() => navigation.push('Weather')}
       >
         <View
           style={{
@@ -270,7 +269,7 @@ function WeatherForcast({ navigation }) {
                 fontSize: 32,
               }}
             >
-              {weatherInfo.temperature}°
+              {temperature}°
             </Text>
           </View>
           <View
@@ -285,7 +284,7 @@ function WeatherForcast({ navigation }) {
               }}
             >
               <Text>
-                {weatherInfo.position} {weatherInfo.weather}
+                {position} {weatherToDescriptionMap(nowWeather)}
               </Text>
             </View>
             <View
@@ -294,7 +293,7 @@ function WeatherForcast({ navigation }) {
               }}
             >
               <Text>
-                {weatherInfo.airQualityIndex} {weatherInfo.airQuality}
+                {AQI} {mapAQIToPollutionLevel(AQI)}
               </Text>
             </View>
           </View>
