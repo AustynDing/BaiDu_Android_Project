@@ -4,6 +4,8 @@ import React from 'react'
 import {
   Animated,
   Button,
+  FlatList,
+  Image,
   StyleSheet,
   Text,
   TextInput,
@@ -11,6 +13,13 @@ import {
   View,
 } from 'react-native'
 import useStickyHeader from '../hooks/useStickyHeader'
+import {
+  Data,
+  NormalNewsItem,
+  AdvancedNewsItem,
+  NormalNewsType,
+  AdvancedNewsType,
+} from '../components/News'
 const Stack = createNativeStackNavigator()
 
 export const HomePage = () => {
@@ -167,7 +176,6 @@ function Header({ navigation }) {
           flexDirection: 'row',
           justifyContent: 'space-between',
           marginTop: 20,
-          backgroundColor: 'blue',
         }}
       >
         <WeatherForcast navigation={navigation} />
@@ -176,17 +184,19 @@ function Header({ navigation }) {
       <StickyHeader stickyScrollY={scrollY}>
         <SearchContainer />
       </StickyHeader>
-      <LogoContainer />
-      <LogoContainer />
-      <LogoContainer />
-      <LogoContainer />
-      <LogoContainer />
-      <LogoContainer />
-      <LogoContainer />
-      <LogoContainer />
-      <LogoContainer />
-      <LogoContainer />
-      <LogoContainer />
+      <FlatList
+        style={{
+          padding: 20,
+        }}
+        data={Data}
+        renderItem={({ item }) => {
+          if (item.type === 'normal')
+            return <NormalNewsItem {...(item as NormalNewsType)} />
+          if (item.type === 'advanced')
+            return <AdvancedNewsItem {...(item as AdvancedNewsType)} />
+          return <Text>Error!!!</Text>
+        }}
+      />
     </Animated.ScrollView>
   )
 }
