@@ -17,7 +17,7 @@ const weatherDescriptionMap = new Map<weather, weatherDescription>([
 
 export const weatherToDescriptionMap = (value: weather) =>
   weatherDescriptionMap.get(value)
-interface WeatherHourType {
+export interface WeatherHourType {
   time: number
   weatherType: weather
 }
@@ -57,12 +57,12 @@ export const weatherData: WeatherDataType = {
   maxTemperature: 35,
   minTemperature: 23,
   temperature: 31,
-  AQI: 66,
+  AQI: 100,
   nowWeather: 'sunny',
   weatherHourList: [
     {
       time: 10,
-      weatherType: 'cloudy',
+      weatherType: 'sunny',
     },
     {
       time: 11,
@@ -79,6 +79,18 @@ export const weatherData: WeatherDataType = {
     {
       time: 14,
       weatherType: 'sunny',
+    },
+    {
+      time: 15,
+      weatherType: 'rain',
+    },
+    {
+      time: 16,
+      weatherType: 'cloudy',
+    },
+    {
+      time: 17,
+      weatherType: 'lightrain',
     },
   ],
 }

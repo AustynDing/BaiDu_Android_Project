@@ -30,7 +30,7 @@ export function AQILinear() {
   }, [marginLeftValue])
 
   const handleIndicatorColor = React.useCallback((value: number) => {
-    const index = thresholds.findIndex(threshold => value < threshold)
+    const index = thresholds.findIndex(threshold => value <= threshold)
     return index === -1 ? airColors[5] : airColors[index]
   }, [])
 
