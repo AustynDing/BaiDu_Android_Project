@@ -25,19 +25,23 @@ import {
 } from '../components/Weather/data'
 import useStickyHeader from '../hooks/useStickyHeader'
 import { WeatherPage } from './WeatherPage'
+import { NewsAddPage } from './NewsAddPage'
+import { usePageNavigtation } from '../hooks/usePageNavigation'
+import { useScreens } from '../hooks/useScreens'
 const Stack = createNativeStackNavigator()
 
 export const HomePage = () => {
+  const screens = useScreens()
   return (
     <>
-      <Stack.Navigator initialRouteName="Header">
+      <Stack.Navigator initialRouteName={screens.Home}>
         <Stack.Screen
-          name="Header"
-          component={Header}
+          name={screens.Home}
+          component={HomeScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Weather"
+          name={screens.Weather}
           component={WeatherPage}
           initialParams={{
             hostName: 'Austyn',
@@ -45,8 +49,8 @@ export const HomePage = () => {
           // options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Details"
-          component={DetailsScreen}
+          name={screens.NewsAdd}
+          component={NewsAddPage}
           options={({ route }) => ({
             title: route.params?.name ?? 'Not defined',
             headerTintColor: '#fff',
@@ -60,51 +64,6 @@ export const HomePage = () => {
   )
 }
 
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1 }}>
-      <MainContainer />
-    </View>
-  )
-}
-
-function DetailsScreen({ navigation }) {
-  // const { itemId, otherParam } = route.params
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
-      <Text>itemId: {JSON.stringify(0)}</Text>
-      <Text>otherParam: {JSON.stringify(0)}</Text>
-      <Button
-        title="Go to Details... again"
-        onPress={() =>
-          navigation.push('Details', {
-            itemId: Math.floor(Math.random() * 100),
-          })
-        }
-      />
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
-      <Button title="Go back" onPress={() => navigation.goBack()} />
-      <Button
-        title="set params"
-        onPress={() =>
-          navigation.setParams({
-            itemId: itemId + 10,
-          })
-        }
-      />
-    </View>
-  )
-}
-
-function MainContainer() {
-  return (
-    <View style={{ flex: 1 }}>
-      <LogoContainer />
-      <SearchContainer />
-    </View>
-  )
-}
 
 function SearchContainer() {
   const [searchText, setSearchText] = React.useState('')
@@ -156,7 +115,7 @@ function LogoContainer() {
   )
 }
 
-function Header({ navigation }) {
+function HomeScreen({ navigation }) {
   const scrollY = React.useRef(new Animated.Value(0)).current
   const { StickyHeader } = useStickyHeader()
   return (
@@ -184,29 +143,37 @@ function Header({ navigation }) {
         }}
       >
         <WeatherForcast navigation={navigation} />
-        <AddNews navigation={navigation} />
+        <AddNewsIcon navigation={navigation} />
       </View>
       <StickyHeader stickyScrollY={scrollY}>
         <SearchContainer />
       </StickyHeader>
-      <FlatList
-        style={{
-          padding: 20,
-        }}
-        data={Data}
-        renderItem={({ item }) => {
-          if (item.type === 'normal')
-            return <NormalNewsItem {...(item as NormalNewsType)} />
-          if (item.type === 'advanced')
-            return <AdvancedNewsItem {...(item as AdvancedNewsType)} />
-          return <Text>Error!!!</Text>
-        }}
-      />
+      <LogoContainer/>
+      <NewsList/>
     </Animated.ScrollView>
   )
 }
 
-function AddNews({ navigation }) {
+function NewsList(){
+  return (
+    <FlatList
+    style={{
+      padding: 20,
+    }}
+    data={Data}
+    renderItem={({ item }) => {
+      if (item.type === 'normal')
+        return <NormalNewsItem {...(item as NormalNewsType)} />
+      if (item.type === 'advanced')
+        return <AdvancedNewsItem {...(item as AdvancedNewsType)} />
+      return <Text>Error!!!</Text>
+    }}
+  />
+  )
+}
+
+function AddNewsIcon({ navigation }) {
+  const {goToNewsAddPage} = usePageNavigtation()
   return (
     <View
       style={{
@@ -218,7 +185,7 @@ function AddNews({ navigation }) {
       }}
     >
       <Icon
-        onPress={() => navigation.push('Home')}
+        onPress={goToNewsAddPage}
         size={25}
         type="font-awesome"
         name="plus-circle"
@@ -228,23 +195,15 @@ function AddNews({ navigation }) {
   )
 }
 
-type AirQuality = '优' | '良'
-type Weather = '晴' | '雨'
-interface WeatherInfo {
-  temperature: number
-  weather: Weather
-  position: string
-  airQualityIndex: number
-  airQuality: AirQuality
-}
 function WeatherForcast({ navigation }) {
   const { position, temperature, AQI, nowWeather } = weatherData
+  const {goToWeatherPage} = usePageNavigtation()
   return (
     <>
       <TouchableHighlight
         activeOpacity={0.6}
         underlayColor="#DDDDDD"
-        onPress={() => navigation.push('Weather')}
+        onPress={goToWeatherPage}
       >
         <View
           style={{
