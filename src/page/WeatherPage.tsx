@@ -1,7 +1,13 @@
 import { Icon, Image } from '@rneui/themed'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
 import { AQILinear } from '../components/Weather/AQILinear'
-import { mapAQIToPollutionLevel, weatherData, WeatherHourType, weatherToDescriptionMap, weatherToImageMap } from '../components/Weather/data'
+import {
+  mapAQIToPollutionLevel,
+  weatherData,
+  WeatherHourType,
+  weatherToDescriptionMap,
+  weatherToImageMap,
+} from '../components/Weather/data'
 const defaultColor = '#ffffff'
 
 export function WeatherPage() {
@@ -55,115 +61,118 @@ export function WeatherPage() {
           最高{maxTemperature}° 最低{minTemperature}°
         </Text>
       </View>
-      <AirQualityContainer AQI={AQI}/>
+      <AirQualityContainer AQI={AQI} />
       <HourlyWeatherForcast weatherHourList={weatherHourList} />
     </View>
   )
 }
-function AirQualityContainer(props:{AQI: number}){
-    const {AQI} = props
-    return (
-        <Wrapper height={180}>
-        <View
+function AirQualityContainer(props: { AQI: number }) {
+  const { AQI } = props
+  return (
+    <Wrapper height={180}>
+      <View
         style={{
-            marginLeft:15,
-            marginTop:5,
+          marginLeft: 15,
+          marginTop: 5,
         }}
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
         >
-         <View
-            style = {{
-                flexDirection:'row',
-                alignItems:'center',
-            }}
-         >
-            <Icon name="modx" size={16} type="font-awesome" color="#7EB8FF" />
-         <Text style={{ color: '#7EB8FF',marginLeft:5 }}>
-            空气质量
-          </Text>
-         </View>
-          <View>
+          <Icon name="modx" size={16} type="font-awesome" color="#7EB8FF" />
+          <Text style={{ color: '#7EB8FF', marginLeft: 5 }}>空气质量</Text>
+        </View>
+        <View>
           <Text
             style={{ color: defaultColor, fontSize: 18, fontWeight: 'bold' }}
           >
             {AQI} - {mapAQIToPollutionLevel(AQI)}
           </Text>
-            <View
-            style ={{
-                marginTop:10,
-                marginBottom:10
-            }}>
+          <View
+            style={{
+              marginTop: 10,
+              marginBottom: 10,
+            }}
+          >
             <Text style={{ color: defaultColor }}>当前AQI(CN)为{AQI}。</Text>
-            </View>
           </View>
         </View>
-        <AQILinear />
-      </Wrapper>
-    )
+      </View>
+      <AQILinear />
+    </Wrapper>
+  )
 }
 
-function HourlyWeatherForcast(props:{weatherHourList: WeatherHourType[]}){
-    return (
-        <Wrapper height={150}>
-        <View
+function HourlyWeatherForcast(props: { weatherHourList: WeatherHourType[] }) {
+  return (
+    <Wrapper height={150}>
+      <View
         style={{
-            marginTop:5,
+          marginTop: 5,
         }}
+      >
+        <View
+          style={{
+            marginLeft: 15,
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}
         >
-         <View
-            style = {{
-                marginLeft:15,
-                flexDirection:'row',
-                alignItems:'center',
-            }}
-         >
-            <Icon name="clock-o" size={16} type="font-awesome" color="#7EB8FF" />
-         <Text style={{ color: '#7EB8FF',marginLeft:5 }}>
+          <Icon name="clock-o" size={16} type="font-awesome" color="#7EB8FF" />
+          <Text style={{ color: '#7EB8FF', marginLeft: 5 }}>
             每小时天气预报
           </Text>
-         </View>
+        </View>
         <View>
-            <FlatList
-                data = {props.weatherHourList}
-                renderItem = {renderItem}
-                keyExtractor={item => item.time + item.weatherType}
-                horizontal={true}
-            />
+          <FlatList
+            data={props.weatherHourList}
+            renderItem={renderItem}
+            keyExtractor={item => item.time + item.weatherType}
+            horizontal={true}
+          />
         </View>
-        </View>
-      </Wrapper>
-    )
+      </View>
+    </Wrapper>
+  )
 }
 
-function renderItem(props: {item: WeatherHourType}){
-    const {item} = props
-    const {time,weatherType} = item
-    return (
-        <View
+function renderItem(props: { item: WeatherHourType }) {
+  const { item } = props
+  const { time, weatherType } = item
+  return (
+    <View
+      style={{
+        width: 70,
+        marginTop: 10,
+        height: 100,
+        alignItems: 'center',
+        justifyContent: 'space-around',
+      }}
+    >
+      <View>
+        <Text style={{ fontSize: 16, color: defaultColor, fontWeight: 'bold' }}>
+          {time}时
+        </Text>
+      </View>
+      <Image
         style={{
-            width:70,
-            marginTop:10,
-            height:100,
-            alignItems:'center',
-            justifyContent:'space-around'
+          height: 40,
+          width: 40,
         }}
-        >
-            <View>
-            <Text style={{fontSize:16,color:defaultColor,fontWeight:'bold'}}>{time}时</Text>
-            </View>
-            <Image  
-            style={{
-                height:40,
-                width:40
-            }}
-            source={weatherToImageMap[weatherType]}/>
-            <Text style={{fontSize:16,color:defaultColor,fontWeight:'bold'}}>{weatherToDescriptionMap(weatherType)}</Text>
-
-        </View>
-    )
+        source={weatherToImageMap[weatherType]}
+      />
+      <Text style={{ fontSize: 16, color: defaultColor, fontWeight: 'bold' }}>
+        {weatherToDescriptionMap(weatherType)}
+      </Text>
+    </View>
+  )
 }
 
-function Wrapper(props: { height: number; children?: any; style?:any }) {
-  const { height, children,style } = props
+function Wrapper(props: { height: number; children?: any; style?: any }) {
+  const { height, children, style } = props
   return (
     <View
       style={[
@@ -175,7 +184,7 @@ function Wrapper(props: { height: number; children?: any; style?:any }) {
           borderRadius: 10,
           height: height,
         },
-        style
+        style,
       ]}
     >
       {children}
