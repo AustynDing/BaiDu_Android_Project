@@ -1,6 +1,6 @@
 /**
- * 
- * @param seconds 
+ *
+ * @param seconds
  * @returns 格式化的时间字符串:x:xx:xx: 01:22 00:45 16:23 1:46:01
  */
 export function formatDuration(seconds: number): string {

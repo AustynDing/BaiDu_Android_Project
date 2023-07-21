@@ -3,6 +3,8 @@ import React from 'react'
 import { View, Text, Image, FlatList } from 'react-native'
 import { VideoItemType, data } from '../components/Vedio'
 import { formatDuration } from '../utils/formatDuration'
+import LinearGradient from 'react-native-linear-gradient'
+
 export function VideoPage() {
   const renderItem = ({ item }) => <VideoItem {...item} />
   return (
@@ -53,6 +55,7 @@ function VideoContainer(
           position: 'absolute',
           top: 10,
           left: 10,
+          zIndex: 10,
         }}
       >
         <Text style={{ fontSize: 16, color: '#fff' }}>{title}</Text>
@@ -60,6 +63,17 @@ function VideoContainer(
           {videoViewNum}万次播放
         </Text>
       </View>
+      <LinearGradient // 实现蒙层效果
+        colors={['rgba(0, 0, 0, 0.6)', 'rgba(255, 255, 255, 0)']}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '40%',
+          borderRadius: 20,
+        }}
+      />
       <View
         style={{
           position: 'absolute',
@@ -71,7 +85,7 @@ function VideoContainer(
           height: 30,
         }}
       >
-        <Text style={{ color: '#fff', fontSize: 12 }}>
+        <Text style={{ color: '#fff', fontSize: 14 }}>
           {formatDuration(videoDuration)}
         </Text>
       </View>
@@ -80,7 +94,7 @@ function VideoContainer(
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: [{ translateX: -16 }, { translateY: -16 }],
+          transform: [{ translateX: -20 }, { translateY: -20 }], // 无法使用百分比，只能根据width和height调整
           backgroundColor: 'rgba(0,0,0,0.5)', // 通过透明度调整背景颜色
           width: 40,
           height: 40,
