@@ -51,12 +51,9 @@ export const HomePage = () => {
         <Stack.Screen
           name={screens.NewsAdd}
           component={NewsAddPage}
+          
           options={({ route }) => ({
-            title: route.params?.name ?? 'Not defined',
-            headerTintColor: '#fff',
-            headerStyle: {
-              backgroundColor: 'black',
-            },
+            title: '添加新闻条目',
           })}
         />
       </Stack.Navigator>
