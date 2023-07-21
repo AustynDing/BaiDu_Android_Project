@@ -3,7 +3,6 @@ import { Icon } from '@rneui/themed'
 import React from 'react'
 import {
   Animated,
-  Button,
   FlatList,
   StyleSheet,
   Text,
@@ -23,11 +22,11 @@ import {
   weatherData,
   weatherToDescriptionMap,
 } from '../components/Weather/data'
-import useStickyHeader from '../hooks/useStickyHeader'
-import { WeatherPage } from './WeatherPage'
-import { NewsAddPage } from './NewsAddPage'
 import { usePageNavigtation } from '../hooks/usePageNavigation'
 import { useScreens } from '../hooks/useScreens'
+import useStickyHeader from '../hooks/useStickyHeader'
+import { NewsAddPage } from './NewsAddPage'
+import { WeatherPage } from './WeatherPage'
 const Stack = createNativeStackNavigator()
 
 export const HomePage = () => {
@@ -46,12 +45,10 @@ export const HomePage = () => {
           initialParams={{
             hostName: 'Austyn',
           }}
-          // options={{ headerShown: false }}
         />
         <Stack.Screen
           name={screens.NewsAdd}
           component={NewsAddPage}
-          
           options={({ route }) => ({
             title: '添加新闻条目',
           })}

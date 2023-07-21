@@ -1,13 +1,13 @@
 import { Icon, Image } from '@rneui/themed'
 import { FlatList, StyleSheet, Text, View } from 'react-native'
-import { AQILinear } from '../components/Weather/AQILinear'
 import {
+  AQILinear,
+  WeatherHourType,
   mapAQIToPollutionLevel,
   weatherData,
-  WeatherHourType,
   weatherToDescriptionMap,
   weatherToImageMap,
-} from '../components/Weather/data'
+} from '../components/Weather/'
 const defaultColor = '#ffffff'
 
 //todo 添加页面加载动画

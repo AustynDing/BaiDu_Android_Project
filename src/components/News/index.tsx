@@ -12,6 +12,6 @@ export type AdvancedNewsType = {
   commnetNum?: number
 } & NormalNewsType
 
-export { Data } from './data'
-export { NormalNewsItem } from './NormalNewsItem'
-export { AdvancedNewsItem } from './AdvancedNewsItem'
+export * from './data'
+export * from './NormalNewsItem'
+export * from './AdvancedNewsItem'
