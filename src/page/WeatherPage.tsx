@@ -10,6 +10,7 @@ import {
 } from '../components/Weather/data'
 const defaultColor = '#ffffff'
 
+//todo 添加页面加载动画
 export function WeatherPage() {
   const {
     position,
@@ -132,6 +133,7 @@ function HourlyWeatherForcast(props: { weatherHourList: WeatherHourType[] }) {
             renderItem={renderItem}
             keyExtractor={item => item.time + item.weatherType}
             horizontal={true}
+            showsHorizontalScrollIndicator={false}
           />
         </View>
       </View>

@@ -64,7 +64,6 @@ export const HomePage = () => {
   )
 }
 
-
 function SearchContainer() {
   const [searchText, setSearchText] = React.useState('')
   const [isFocused, setIsFocused] = React.useState(false)
@@ -148,32 +147,32 @@ function HomeScreen({ navigation }) {
       <StickyHeader stickyScrollY={scrollY}>
         <SearchContainer />
       </StickyHeader>
-      <LogoContainer/>
-      <NewsList/>
+      <LogoContainer />
+      <NewsList />
     </Animated.ScrollView>
   )
 }
 
-function NewsList(){
+function NewsList() {
   return (
     <FlatList
-    style={{
-      padding: 20,
-    }}
-    data={Data}
-    renderItem={({ item }) => {
-      if (item.type === 'normal')
-        return <NormalNewsItem {...(item as NormalNewsType)} />
-      if (item.type === 'advanced')
-        return <AdvancedNewsItem {...(item as AdvancedNewsType)} />
-      return <Text>Error!!!</Text>
-    }}
-  />
+      style={{
+        padding: 20,
+      }}
+      data={Data}
+      renderItem={({ item }) => {
+        if (item.type === 'normal')
+          return <NormalNewsItem {...(item as NormalNewsType)} />
+        if (item.type === 'advanced')
+          return <AdvancedNewsItem {...(item as AdvancedNewsType)} />
+        return <Text>Error!!!</Text>
+      }}
+    />
   )
 }
 
 function AddNewsIcon({ navigation }) {
-  const {goToNewsAddPage} = usePageNavigtation()
+  const { goToNewsAddPage } = usePageNavigtation()
   return (
     <View
       style={{
@@ -197,7 +196,7 @@ function AddNewsIcon({ navigation }) {
 
 function WeatherForcast({ navigation }) {
   const { position, temperature, AQI, nowWeather } = weatherData
-  const {goToWeatherPage} = usePageNavigtation()
+  const { goToWeatherPage } = usePageNavigtation()
   return (
     <>
       <TouchableHighlight

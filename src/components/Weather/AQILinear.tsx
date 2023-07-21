@@ -15,7 +15,7 @@ export function AQILinear() {
   const [marginLeftValue, setMarginLeftValue] = React.useState(0)
   const [layout, setLayout] = React.useState({ width: 0, height: 0 })
   const onLayoutHandler = event => {
-    const { width, height } = event.nativeEvent.layout
+    const { width, height } = event.nativeEvent.layout // 获取布局信息
     setLayout({ width, height })
   }
   React.useEffect(() => {
@@ -25,9 +25,9 @@ export function AQILinear() {
   const valueToOffset = React.useMemo(() => {
     return Math.min(
       Math.floor(layout.width * airColors.length),
-      Math.floor((marginLeftValue / 50) * layout.width),
+      Math.floor((marginLeftValue / 50) * layout.width), // 50 - 每一格对应值50
     )
-  }, [marginLeftValue, layout.width])
+  }, [marginLeftValue, layout.width]) // 需要监听layout.width-因为一开始默认为0，布局后才会改变
 
   const handleIndicatorColor = React.useCallback((value: number) => {
     const index = thresholds.findIndex(threshold => value <= threshold)
@@ -58,7 +58,7 @@ export function AQILinear() {
           style={[
             styles.indicatorImage,
             {
-              tintColor: handleIndicatorColor(marginLeftValue),
+              tintColor: handleIndicatorColor(marginLeftValue), // 可以修改图片填充颜色
               marginLeft: valueToOffset,
             },
           ]}
