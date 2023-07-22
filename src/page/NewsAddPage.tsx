@@ -11,10 +11,14 @@ import {
   Alert,
 } from 'react-native'
 import * as ImagePicker from 'react-native-image-picker'
+import { HeaderTab } from '../components/HeaderTab'
 
 export function NewsAddPage() {
   return (
     <View style={styles.container}>
+      <HeaderTab>
+        <Text style={{fontSize:20,color:'#000', marginLeft:10}}>添加新闻条目</Text>
+      </HeaderTab>
       <ItemContainer
         title="标题"
         placeholder="请输入新闻标题"

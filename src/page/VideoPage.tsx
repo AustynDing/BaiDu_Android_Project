@@ -4,11 +4,13 @@ import { View, Text, Image, FlatList } from 'react-native'
 import { VideoItemType, data } from '../components/Vedio'
 import { formatDuration } from '../utils/formatDuration'
 import LinearGradient from 'react-native-linear-gradient'
+import { SearchBar } from '../components/SearchBar'
 
 export function VideoPage() {
   const renderItem = ({ item }) => <VideoItem {...item} />
   return (
     <View style={{ flex: 1 }}>
+      <SearchBar/>
       <FlatList data={data} renderItem={renderItem} />
     </View>
   )

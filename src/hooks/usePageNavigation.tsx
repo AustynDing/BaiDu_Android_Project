@@ -11,5 +11,11 @@ export const usePageNavigtation = () => {
     goToNewsAddPage() {
       navigation.push(screens.NewsAdd)
     },
+    goToSearchInputPage(){
+      navigation.push(screens.SearchInput)
+    },
+    goBack(){
+      navigation.goBack()
+    },
   }
 }

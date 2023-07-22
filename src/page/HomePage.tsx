@@ -27,6 +27,8 @@ import { useScreens } from '../hooks/useScreens'
 import useStickyHeader from '../hooks/useStickyHeader'
 import { NewsAddPage } from './NewsAddPage'
 import { WeatherPage } from './WeatherPage'
+import { SearchBar } from '../components/SearchBar'
+import { SearchInputPage } from './SeachInputPage'
 const Stack = createNativeStackNavigator()
 
 export const HomePage = () => {
@@ -45,47 +47,24 @@ export const HomePage = () => {
           initialParams={{
             hostName: 'Austyn',
           }}
+          options={{ headerShown:false }}
         />
         <Stack.Screen
           name={screens.NewsAdd}
           component={NewsAddPage}
-          options={({ route }) => ({
-            title: '添加新闻条目',
-          })}
+          options={{ headerShown:false }}
+        />
+        <Stack.Screen
+          name={screens.SearchInput}
+          component={SearchInputPage}
+          options={{ headerShown:false }}
         />
       </Stack.Navigator>
     </>
   )
 }
 
-function SearchContainer() {
-  const [searchText, setSearchText] = React.useState('')
-  const [isFocused, setIsFocused] = React.useState(false)
-  return (
-    <View
-      style={{
-        backgroundColor: '#F2F2F2',
-      }}
-    >
-      <TextInput
-        style={{
-          flex: 1,
-          borderColor: isFocused ? 'black' : 'gray',
-          borderWidth: 1,
-          borderStyle: 'solid',
-          borderRadius: 15,
-          height: 40,
-          margin: 20,
-        }}
-        placeholder="搜索或输入网址"
-        value={searchText}
-        onChangeText={setSearchText}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-      />
-    </View>
-  )
-}
+
 
 function LogoContainer() {
   return (
@@ -139,7 +118,7 @@ function HomeScreen({ navigation }) {
         <AddNewsIcon navigation={navigation} />
       </View>
       <StickyHeader stickyScrollY={scrollY}>
-        <SearchContainer />
+        <SearchBar />
       </StickyHeader>
       <LogoContainer />
       <NewsList />
