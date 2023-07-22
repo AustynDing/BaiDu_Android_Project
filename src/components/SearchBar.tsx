@@ -1,8 +1,8 @@
-import { useRoute } from "@react-navigation/native"
-import React from "react"
-import { TextInput, View } from "react-native"
-import { usePageNavigation } from "../hooks/usePageNavigation"
-import { useScreens } from "../hooks/useScreens"
+import { useRoute } from '@react-navigation/native'
+import React from 'react'
+import { TextInput, View } from 'react-native'
+import { usePageNavigation } from '../hooks/usePageNavigation'
+import { useScreens } from '../hooks/useScreens'
 
 export function SearchBar() {
   const [searchText, setSearchText] = React.useState('')
@@ -31,7 +31,9 @@ export function SearchBar() {
         placeholder="搜索或输入网址"
         value={searchText}
         onChangeText={setSearchText}
-        onFocus={isSearchInputPage ? () => setIsFocused(true) : goToSearchInputPage}
+        onFocus={
+          isSearchInputPage ? () => setIsFocused(true) : goToSearchInputPage
+        }
         onBlur={() => setIsFocused(false)}
       />
     </View>

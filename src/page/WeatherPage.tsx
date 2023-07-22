@@ -1,5 +1,6 @@
 import { Icon, Image } from '@rneui/themed'
 import { FlatList, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { HeaderTab } from '../components/HeaderTab'
 import {
   AQILinear,
   WeatherHourType,
@@ -8,7 +9,6 @@ import {
   weatherToDescriptionMap,
   weatherToImageMap,
 } from '../components/Weather/'
-import { HeaderTab } from '../components/HeaderTab'
 const defaultColor = '#ffffff'
 
 //todo 添加页面加载动画
@@ -28,50 +28,49 @@ export function WeatherPage() {
       }}
     >
       <ImageBackground
-      resizeMode='cover'
-      source={require('../asset/weather_sunny_bg.jpg')}
-      style={{flex:1,}}
+        resizeMode="cover"
+        source={require('../asset/weather_sunny_bg.jpg')}
+        style={{ flex: 1 }}
       >
-      <HeaderTab arrowColor='white'/>
-      <View
-        style={{
-          height: 250,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Text
+        <HeaderTab arrowColor="white" />
+        <View
           style={{
-            fontSize: 28,
-            color: defaultColor,
+            height: 250,
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-          {position}
-        </Text>
-        <Text
-          style={{
-            color: defaultColor,
-            fontSize: 60,
-            textShadowColor: 'rgba(0, 0, 0, 0.5)', // 阴影颜色，使用rgba来指定透明度
-            textShadowOffset: { width: 1, height: 2 }, // 阴影偏移量，分别控制水平和垂直方向的偏移
-            textShadowRadius: 5, // 阴影模糊半径
-          }}
-        >
-          {temperature}°
-        </Text>
-        <Text
-          style={{
-            fontSize: 20,
-            color: defaultColor,
-          }}
-        >
-          最高{maxTemperature}° 最低{minTemperature}°
-        </Text>
-      </View>
-      <AirQualityContainer AQI={AQI} />
-      <HourlyWeatherForcast weatherHourList={weatherHourList} />
+          <Text
+            style={{
+              fontSize: 28,
+              color: defaultColor,
+            }}
+          >
+            {position}
+          </Text>
+          <Text
+            style={{
+              color: defaultColor,
+              fontSize: 60,
+              textShadowColor: 'rgba(0, 0, 0, 0.5)', // 阴影颜色，使用rgba来指定透明度
+              textShadowOffset: { width: 1, height: 2 }, // 阴影偏移量，分别控制水平和垂直方向的偏移
+              textShadowRadius: 5, // 阴影模糊半径
+            }}
+          >
+            {temperature}°
+          </Text>
+          <Text
+            style={{
+              fontSize: 20,
+              color: defaultColor,
+            }}
+          >
+            最高{maxTemperature}° 最低{minTemperature}°
+          </Text>
+        </View>
+        <AirQualityContainer AQI={AQI} />
+        <HourlyWeatherForcast weatherHourList={weatherHourList} />
       </ImageBackground>
-      
     </View>
   )
 }

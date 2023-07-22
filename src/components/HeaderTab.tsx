@@ -1,11 +1,12 @@
-import { Icon } from "@rneui/themed";
-import React from "react";
-import { View } from "react-native";
-import { usePageNavigation } from "../hooks/usePageNavigation";
+import { Icon } from '@rneui/themed'
+import React from 'react'
+import { View } from 'react-native'
+import { usePageNavigation } from '../hooks/usePageNavigation'
 
-
-
-export function HeaderTab(props: { children?: React.ReactNode, arrowColor?: string }) {
+export function HeaderTab(props: {
+  children?: React.ReactNode
+  arrowColor?: string
+}) {
   const { children, arrowColor = '#333333' } = props
   const { goBack } = usePageNavigation()
   return (
@@ -14,12 +15,12 @@ export function HeaderTab(props: { children?: React.ReactNode, arrowColor?: stri
         flexDirection: 'row',
         height: 40,
         width: '100%',
-        alignItems: 'center'
+        alignItems: 'center',
       }}
     >
       <Icon
-        name='angle-left'
-        type='font-awesome'
+        name="angle-left"
+        type="font-awesome"
         color={arrowColor}
         size={30}
         style={{

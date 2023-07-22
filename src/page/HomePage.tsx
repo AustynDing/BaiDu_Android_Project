@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
-  View
+  View,
 } from 'react-native'
 import {
   AdvancedNewsItem,
@@ -62,8 +62,6 @@ export const HomePage = () => {
     </>
   )
 }
-
-
 
 function LogoContainer() {
   return (

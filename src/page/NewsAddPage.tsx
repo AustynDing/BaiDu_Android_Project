@@ -1,14 +1,14 @@
 import { Icon } from '@rneui/themed'
 import React from 'react'
 import {
-  Image,
+  Alert,
   Button,
+  Image,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  Alert,
 } from 'react-native'
 import * as ImagePicker from 'react-native-image-picker'
 import { HeaderTab } from '../components/HeaderTab'
@@ -17,7 +17,9 @@ export function NewsAddPage() {
   return (
     <View style={styles.container}>
       <HeaderTab>
-        <Text style={{fontSize:20,color:'#000', marginLeft:10}}>添加新闻条目</Text>
+        <Text style={{ fontSize: 20, color: '#000', marginLeft: 10 }}>
+          添加新闻条目
+        </Text>
       </HeaderTab>
       <ItemContainer
         title="标题"

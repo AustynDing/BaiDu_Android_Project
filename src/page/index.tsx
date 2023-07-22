@@ -1,4 +1,4 @@
-export *from './HomePage'
+export * from './HomePage'
 export * from './ProfilePage'
 export * from './VideoPage'
 export const enum TabPage {
