@@ -1,16 +1,42 @@
-import { Icon, Avatar } from '@rneui/base'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { Avatar, Icon } from '@rneui/base'
 import React from 'react'
-import { View, Text, Image, FlatList } from 'react-native'
-import { VideoItemType, data } from '../components/Vedio'
-import { formatDuration } from '../utils/formatDuration'
+import { FlatList, Image, Text, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { SearchBar } from '../components/SearchBar'
+import { VideoItemType, data } from '../components/Vedio'
+import { useScreens } from '../hooks/useScreens'
+import { formatDuration } from '../utils/formatDuration'
+import { SearchInputPage } from './SeachInputPage'
+
+const Stack = createNativeStackNavigator()
+const screens = useScreens()
 
 export function VideoPage() {
+  return (
+    <>
+      <Stack.Navigator initialRouteName={screens.Vedio}>
+        <Stack.Screen
+          name={screens.Vedio}
+          component={VideoScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={screens.SearchInput}
+          component={SearchInputPage}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </>
+  )
+}
+
+export function VideoScreen() {
   const renderItem = ({ item }) => <VideoItem {...item} />
+
   return (
     <View style={{ flex: 1 }}>
-      <SearchBar/>
+      <SearchBar />
       <FlatList data={data} renderItem={renderItem} />
     </View>
   )

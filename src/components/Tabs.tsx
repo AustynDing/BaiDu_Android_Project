@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Icon } from '@rneui/base'
 import React from 'react'
-import { HomePage, ProfilePage, TabPage, VideoPage } from '../page'
+import { HomePage, ProfilePage, TabPage, VideoPage, VideoScreen } from '../page'
 const Tab = createBottomTabNavigator()
 
 export const MyTabs = () => {

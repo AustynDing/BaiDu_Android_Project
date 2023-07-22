@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import { useScreens } from './useScreens'
 
-export const usePageNavigtation = () => {
+export const usePageNavigation = () => {
   const navigation = useNavigation()
   const screens = useScreens()
   return {
@@ -11,10 +11,10 @@ export const usePageNavigtation = () => {
     goToNewsAddPage() {
       navigation.push(screens.NewsAdd)
     },
-    goToSearchInputPage(){
+    goToSearchInputPage() {
       navigation.push(screens.SearchInput)
     },
-    goBack(){
+    goBack() {
       navigation.goBack()
     },
   }

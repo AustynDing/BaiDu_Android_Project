@@ -1,5 +1,5 @@
 import { Icon, Image } from '@rneui/themed'
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, ImageBackground, StyleSheet, Text, View } from 'react-native'
 import {
   AQILinear,
   WeatherHourType,
@@ -8,6 +8,7 @@ import {
   weatherToDescriptionMap,
   weatherToImageMap,
 } from '../components/Weather/'
+import { HeaderTab } from '../components/HeaderTab'
 const defaultColor = '#ffffff'
 
 //todo 添加页面加载动画
@@ -26,10 +27,15 @@ export function WeatherPage() {
         flex: 1,
       }}
     >
+      <ImageBackground
+      resizeMode='cover'
+      source={require('../asset/weather_sunny_bg.jpg')}
+      style={{flex:1,}}
+      >
+      <HeaderTab arrowColor='white'/>
       <View
         style={{
           height: 250,
-          backgroundColor: 'pink',
           justifyContent: 'center',
           alignItems: 'center',
         }}
@@ -64,6 +70,8 @@ export function WeatherPage() {
       </View>
       <AirQualityContainer AQI={AQI} />
       <HourlyWeatherForcast weatherHourList={weatherHourList} />
+      </ImageBackground>
+      
     </View>
   )
 }

@@ -6,9 +6,8 @@ import {
   FlatList,
   StyleSheet,
   Text,
-  TextInput,
   TouchableHighlight,
-  View,
+  View
 } from 'react-native'
 import {
   AdvancedNewsItem,
@@ -17,18 +16,18 @@ import {
   NormalNewsItem,
   NormalNewsType,
 } from '../components/News'
+import { SearchBar } from '../components/SearchBar'
 import {
   mapAQIToPollutionLevel,
   weatherData,
   weatherToDescriptionMap,
 } from '../components/Weather/data'
-import { usePageNavigtation } from '../hooks/usePageNavigation'
+import { usePageNavigation } from '../hooks/usePageNavigation'
 import { useScreens } from '../hooks/useScreens'
 import useStickyHeader from '../hooks/useStickyHeader'
 import { NewsAddPage } from './NewsAddPage'
-import { WeatherPage } from './WeatherPage'
-import { SearchBar } from '../components/SearchBar'
 import { SearchInputPage } from './SeachInputPage'
+import { WeatherPage } from './WeatherPage'
 const Stack = createNativeStackNavigator()
 
 export const HomePage = () => {
@@ -47,17 +46,17 @@ export const HomePage = () => {
           initialParams={{
             hostName: 'Austyn',
           }}
-          options={{ headerShown:false }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name={screens.NewsAdd}
           component={NewsAddPage}
-          options={{ headerShown:false }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name={screens.SearchInput}
           component={SearchInputPage}
-          options={{ headerShown:false }}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </>
@@ -145,7 +144,7 @@ function NewsList() {
 }
 
 function AddNewsIcon({ navigation }) {
-  const { goToNewsAddPage } = usePageNavigtation()
+  const { goToNewsAddPage } = usePageNavigation()
   return (
     <View
       style={{
@@ -169,7 +168,7 @@ function AddNewsIcon({ navigation }) {
 
 function WeatherForcast({ navigation }) {
   const { position, temperature, AQI, nowWeather } = weatherData
-  const { goToWeatherPage } = usePageNavigtation()
+  const { goToWeatherPage } = usePageNavigation()
   return (
     <>
       <TouchableHighlight
