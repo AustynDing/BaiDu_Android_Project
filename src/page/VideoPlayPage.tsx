@@ -1,20 +1,18 @@
-import {
-  FlatList,
-  ScrollView,
-  Text,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  StyleSheet,
-} from 'react-native'
-import Video from 'react-native-video'
-import { VideoItemType, data } from '../components/Vedio'
-import React from 'react'
-import { Avatar, Dialog } from '@rneui/themed'
 import { Icon } from '@rneui/base'
+import { Avatar, Dialog } from '@rneui/themed'
+import React from 'react'
+import {
+  Dimensions,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
+import Video from 'react-native-video'
 import { HeaderTab } from '../components/HeaderTab'
+import { VideoItemType, data } from '../components/Vedio'
 
 const ItemContext = React.createContext({})
 

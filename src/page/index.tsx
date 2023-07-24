@@ -5,6 +5,7 @@ export * from './SeachInputPage'
 export * from './VideoPlayPage'
 export * from './VideoPreviewPage'
 export * from './WeatherPage'
+export * from './SkeletonPage'
 export const enum TabPage {
   HOME_PAGE = '主页',
   PROFILE_PAGE = '我的',
