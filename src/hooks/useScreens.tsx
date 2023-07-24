@@ -3,7 +3,9 @@ const SCREENS = {
   Weather: 'WeatherScreen',
   NewsAdd: 'NewsAddScreen',
   SearchInput: 'SearchInputScreen',
-  Vedio: 'VedioScreen',
+  VedioPreview: 'VedioPreviewScreen',
+  VedioPlay: 'VedioPlayScreen',
+  Profile: 'ProfileScreen',
   // 添加其他屏幕的名称...
 }
 export const useScreens = () => SCREENS

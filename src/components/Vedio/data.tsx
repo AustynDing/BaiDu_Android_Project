@@ -6,6 +6,7 @@ export interface VideoItemType {
   uploaderAvatar: string
   uploaderNickname: string
   commentNum: number
+  star:number // 收藏
   isFollowed: boolean // 关注
   isLiked: boolean // 点赞
 }
@@ -21,6 +22,7 @@ export const data: VideoItemType[] = [
     commentNum: 800,
     isFollowed: true,
     isLiked: false,
+    star:2014,
   },
   {
     title: '旅行日记：探索神秘的亚马逊雨林',
@@ -32,6 +34,8 @@ export const data: VideoItemType[] = [
     commentNum: 500,
     isFollowed: false,
     isLiked: true,
+    star:2014,
+
   },
   {
     title: '如何快速学会弹奏吉他',
@@ -43,6 +47,8 @@ export const data: VideoItemType[] = [
     commentNum: 1200,
     isFollowed: true,
     isLiked: true,
+    star:2014,
+
   },
   {
     title: '美妆达人分享妆容技巧',
@@ -54,6 +60,8 @@ export const data: VideoItemType[] = [
     commentNum: 300,
     isFollowed: false,
     isLiked: false,
+    star:2014,
+
   },
   {
     title: '早晨瑜伽：焕发一天的活力',
@@ -65,5 +73,6 @@ export const data: VideoItemType[] = [
     commentNum: 600,
     isFollowed: true,
     isLiked: true,
+    star:2014,
   },
 ]

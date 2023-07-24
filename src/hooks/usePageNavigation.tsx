@@ -14,6 +14,9 @@ export const usePageNavigation = () => {
     goToSearchInputPage() {
       navigation.push(screens.SearchInput)
     },
+    goToVideoPlayPage() {
+      navigation.push(screens.VedioPlay)
+    },
     goBack() {
       navigation.goBack()
     },

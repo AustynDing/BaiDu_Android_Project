@@ -1,6 +1,6 @@
 import { Avatar, Icon } from '@rneui/base'
 import React from 'react'
-import { FlatList, Image, Text, View } from 'react-native'
+import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { SearchBar } from '../components/SearchBar'
 import { VideoItemType, data } from '../components/Vedio'
@@ -8,12 +8,15 @@ import { usePageNavigation } from '../hooks/usePageNavigation'
 import { formatDuration } from '../utils/formatDuration'
 
 export function VideoPreviewPage() {
-  const renderItem = ({ item }) => <VideoPreviewItem {...item} />
+  const renderItem = ({ item } : {item: VideoItemType}) => <VideoPreviewItem {...item} />
 
   return (
     <View style={{ flex: 1 }}>
       <SearchBar />
-      <FlatList data={data} renderItem={renderItem} />
+      <FlatList 
+      showsVerticalScrollIndicator={false}
+      data={data} 
+      renderItem={renderItem} />
     </View>
   )
 }
@@ -94,7 +97,7 @@ function VideoPreviewContainer(
           {formatDuration(videoDuration)}
         </Text>
       </View>
-      <View
+      <TouchableOpacity // 代替view，触发点击事件
         style={{
           position: 'absolute',
           top: '50%',
@@ -107,15 +110,16 @@ function VideoPreviewContainer(
           justifyContent: 'center',
           borderRadius: 99,
         }}
+        onPress={goToVideoPlayPage}
+        activeOpacity={1}
       >
         <Icon
-          onPress={goToVideoPlayPage}
           name="play"
           type="font-awesome"
           color="#fff"
           size={20}
         />
-      </View>
+      </TouchableOpacity>
     </View>
   )
 }
