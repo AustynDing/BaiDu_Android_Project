@@ -8,15 +8,18 @@ import { usePageNavigation } from '../hooks/usePageNavigation'
 import { formatDuration } from '../utils/formatDuration'
 
 export function VideoPreviewPage() {
-  const renderItem = ({ item } : {item: VideoItemType}) => <VideoPreviewItem {...item} />
+  const renderItem = ({ item }: { item: VideoItemType }) => (
+    <VideoPreviewItem {...item} />
+  )
 
   return (
     <View style={{ flex: 1 }}>
       <SearchBar />
-      <FlatList 
-      showsVerticalScrollIndicator={false}
-      data={data} 
-      renderItem={renderItem} />
+      <FlatList
+        showsVerticalScrollIndicator={false}
+        data={data}
+        renderItem={renderItem}
+      />
     </View>
   )
 }
@@ -113,12 +116,7 @@ function VideoPreviewContainer(
         onPress={goToVideoPlayPage}
         activeOpacity={1}
       >
-        <Icon
-          name="play"
-          type="font-awesome"
-          color="#fff"
-          size={20}
-        />
+        <Icon name="play" type="font-awesome" color="#fff" size={20} />
       </TouchableOpacity>
     </View>
   )

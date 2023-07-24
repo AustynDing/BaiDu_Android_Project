@@ -6,8 +6,9 @@ import { usePageNavigation } from '../hooks/usePageNavigation'
 export function HeaderTab(props: {
   children?: React.ReactNode
   arrowColor?: string
+  onPress?: () => void
 }) {
-  const { children, arrowColor = '#333333' } = props
+  const { children, arrowColor = '#333333', onPress } = props
   const { goBack } = usePageNavigation()
   return (
     <View
@@ -16,6 +17,7 @@ export function HeaderTab(props: {
         height: 40,
         width: '100%',
         alignItems: 'center',
+        zIndex: 99,
       }}
     >
       <Icon
@@ -26,7 +28,7 @@ export function HeaderTab(props: {
         style={{
           paddingHorizontal: 10,
         }}
-        onPress={goBack}
+        onPress={onPress ? onPress : goBack}
       />
       {children}
     </View>
