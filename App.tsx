@@ -6,183 +6,62 @@
  */
 
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {
-  Button,
-  FlatList,
-  Platform,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  useColorScheme
-} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import {
-  Colors
-} from 'react-native/Libraries/NewAppScreen';
-import { MyTabs } from './src/components';
+import { useScreens } from './src/hooks/useScreens';
+import { HomePage, NewsAddPage, SearchInputPage, VideoPlayPage, VideoPreviewPage, WeatherPage } from './src/page';
 
+const Stack = createNativeStackNavigator()
+const screens = useScreens()
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
 
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <MyTabs />
+        <Stack.Navigator initialRouteName={screens.Home}>
+          <Stack.Group>
+            <Stack.Screen
+              name={screens.Home}
+              component={HomePage}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name={screens.Weather}
+              component={WeatherPage}
+              initialParams={{
+                hostName: 'Austyn',
+              }}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name={screens.NewsAdd}
+              component={NewsAddPage}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name={screens.SearchInput}
+              component={SearchInputPage}
+              options={{ headerShown: false }}
+            />
+          </Stack.Group>
+          <Stack.Group>
+            <Stack.Screen
+              name={screens.VedioPreview}
+              component={VideoPreviewPage}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name={screens.VedioPlay}
+              component={VideoPlayPage}
+              options={{ headerShown: false }}
+            />
+          </Stack.Group>
+        </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
   );
 }
-
-const YourApp = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'flex-end',
-        alignItems: 'flex-start',
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 30
-        }}
-      >Try to edit me! 🎉</Text>
-      <Cafe />
-      <TextInput
-        style={{
-          color: 'red',
-          height: 40,
-          maxWidth: 400,
-          minWidth: 50, // placeholder也会撑开一定的空间，会导致minWitdth效果展示不出来
-          borderWidth: 1,
-          borderColor: 'green'
-        }}
-        placeholder='have a try to type in me'
-      />
-      <PizzaTranslator />
-    </View>
-  )
-}
-
-const Cat = (props: { name: string }) => {
-  const [isHungry, setIsHungry] = React.useState(true)
-  return (
-    <View>
-      <Text>My name is {props.name}, and I am {isHungry ? 'hungry' : 'full'} </Text>
-      <Button
-        disabled={!isHungry}
-        title={isHungry ? 'pour me some milk,please' : 'thank you!'}
-        onPress={() => setIsHungry(false)}
-      />
-    </View>
-  )
-}
-const Cafe = () => {
-  return (
-    <View>
-      <Cat name='miki' />
-      <Cat name='cindy' />
-    </View>
-  )
-}
-
-const PizzaTranslator = () => {
-  const [text, setText] = React.useState('')
-  return (
-    <View>
-      <TextInput
-        style={{
-          height: 40,
-          marginTop: 20,
-          borderColor: 'blue',
-          borderWidth: 2
-        }}
-        placeholder='have a try'
-        onChangeText={text => setText(text)}
-        defaultValue={text}
-      />
-      <Text
-        style={{
-          padding: 10,
-          fontSize: 42
-        }}
-      >
-        {text.split(' ').map((word) => word && '🍕').join(' ')}
-      </Text>
-      <FlatListBasics />
-    </View>
-  )
-}
-
-const FlatListBasics = () => {
-  return (
-    <View style={styles.flatListContainer}>
-      <FlatList
-        data={[
-          { key: 'Devin' },
-          { key: 'Dan' },
-          { key: 'Dominic' },
-          { key: 'Jackson' },
-          { key: 'James' },
-          { key: 'Joel' },
-          { key: 'John' },
-          { key: 'Jillian' },
-          { key: 'Jimmy' },
-          { key: 'Julie' },
-        ]}
-        renderItem={({ item }) => {
-          return (
-            <Text style={styles.flatListItem}>
-              {item.key}
-            </Text>
-          )
-        }}
-      />
-    </View>
-  )
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  flatListContainer: {
-    flex: 1,
-    paddingTop: 22
-  },
-  flatListItem: {
-    padding: 10,
-    fontSize: 18,
-    height: Platform.OS === 'ios' ? 40 : 50,
-    ...Platform.select({
-      ios: {
-        backgroundColor: 'red',
-      },
-      android: {
-        backgroundColor: 'green'
-      }
-    })
-  },
-});
 
 export default App;

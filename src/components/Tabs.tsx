@@ -1,10 +1,12 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Icon } from '@rneui/base'
 import React from 'react'
-import { HomePage, ProfilePage, TabPage, VideoPage } from '../page'
+import { useScreens } from '../hooks/useScreens'
+import { HomeScreen, ProfilePage, TabPage, VideoPreviewPage } from '../page'
 const Tab = createBottomTabNavigator()
 
-export const MyTabs = () => {
+export const BottomTabs = () => {
+  const screens = useScreens()
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -15,7 +17,7 @@ export const MyTabs = () => {
     >
       <Tab.Screen
         name={TabPage.HOME_PAGE}
-        component={HomePage}
+        component={HomeScreen}
         options={{
           tabBarLabel: TabPage.HOME_PAGE,
           tabBarIcon: ({ color, size }) => (
@@ -25,10 +27,10 @@ export const MyTabs = () => {
         }}
       />
       <Tab.Screen
-        name={TabPage.VIDEO_PAGE}
-        component={VideoPage}
+        name={TabPage.VIDEO_PREVIEW_PAGE}
+        component={VideoPreviewPage}
         options={{
-          tabBarLabel: TabPage.VIDEO_PAGE,
+          tabBarLabel: TabPage.VIDEO_PREVIEW_PAGE,
           tabBarIcon: ({ color, size }) => (
             <Icon
               type="font-awesome"

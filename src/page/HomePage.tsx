@@ -1,4 +1,3 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Icon } from '@rneui/themed'
 import React from 'react'
 import {
@@ -17,48 +16,19 @@ import {
   NormalNewsType,
 } from '../components/News'
 import { SearchBar } from '../components/SearchBar'
+import { BottomTabs } from '../components/Tabs'
 import {
   mapAQIToPollutionLevel,
   weatherData,
   weatherToDescriptionMap,
 } from '../components/Weather/data'
 import { usePageNavigation } from '../hooks/usePageNavigation'
-import { useScreens } from '../hooks/useScreens'
 import useStickyHeader from '../hooks/useStickyHeader'
-import { NewsAddPage } from './NewsAddPage'
-import { SearchInputPage } from './SeachInputPage'
-import { WeatherPage } from './WeatherPage'
-const Stack = createNativeStackNavigator()
 
 export const HomePage = () => {
-  const screens = useScreens()
   return (
     <>
-      <Stack.Navigator initialRouteName={screens.Home}>
-        <Stack.Screen
-          name={screens.Home}
-          component={HomeScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name={screens.Weather}
-          component={WeatherPage}
-          initialParams={{
-            hostName: 'Austyn',
-          }}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name={screens.NewsAdd}
-          component={NewsAddPage}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name={screens.SearchInput}
-          component={SearchInputPage}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
+      <BottomTabs />
     </>
   )
 }
@@ -84,7 +54,7 @@ function LogoContainer() {
   )
 }
 
-function HomeScreen({ navigation }) {
+export function HomeScreen({ navigation }) {
   const scrollY = React.useRef(new Animated.Value(0)).current
   const { StickyHeader } = useStickyHeader()
   return (

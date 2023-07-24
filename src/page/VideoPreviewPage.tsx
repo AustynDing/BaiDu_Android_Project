@@ -1,38 +1,14 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Avatar, Icon } from '@rneui/base'
 import React from 'react'
 import { FlatList, Image, Text, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { SearchBar } from '../components/SearchBar'
 import { VideoItemType, data } from '../components/Vedio'
-import { useScreens } from '../hooks/useScreens'
+import { usePageNavigation } from '../hooks/usePageNavigation'
 import { formatDuration } from '../utils/formatDuration'
-import { SearchInputPage } from './SeachInputPage'
 
-const Stack = createNativeStackNavigator()
-const screens = useScreens()
-
-export function VideoPage() {
-  return (
-    <>
-      <Stack.Navigator initialRouteName={screens.Vedio}>
-        <Stack.Screen
-          name={screens.Vedio}
-          component={VideoScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name={screens.SearchInput}
-          component={SearchInputPage}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </>
-  )
-}
-
-export function VideoScreen() {
-  const renderItem = ({ item }) => <VideoItem {...item} />
+export function VideoPreviewPage() {
+  const renderItem = ({ item }) => <VideoPreviewItem {...item} />
 
   return (
     <View style={{ flex: 1 }}>
@@ -42,22 +18,23 @@ export function VideoScreen() {
   )
 }
 
-function VideoItem(props: VideoItemType) {
+function VideoPreviewItem(props: VideoItemType) {
   return (
     <View>
-      <VideoContainer {...props} />
-      <VideoBottomTab {...props} />
+      <VideoPreviewContainer {...props} />
+      <VideoPreviewBottomTab {...props} />
     </View>
   )
 }
 
-function VideoContainer(
+function VideoPreviewContainer(
   props: Pick<
     VideoItemType,
     'title' | 'videoViewNum' | 'videoImage' | 'videoDuration'
   >,
 ) {
   const { title, videoViewNum, videoImage, videoDuration } = props //videoImage为备用的云图片url
+  const { goToVideoPlayPage } = usePageNavigation()
   return (
     <View
       style={{
@@ -131,13 +108,19 @@ function VideoContainer(
           borderRadius: 99,
         }}
       >
-        <Icon name="play" type="font-awesome" color="#fff" size={20} />
+        <Icon
+          onPress={goToVideoPlayPage}
+          name="play"
+          type="font-awesome"
+          color="#fff"
+          size={20}
+        />
       </View>
     </View>
   )
 }
 
-function VideoBottomTab(
+function VideoPreviewBottomTab(
   props: Pick<
     VideoItemType,
     | 'uploaderAvatar'
