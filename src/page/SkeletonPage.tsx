@@ -6,7 +6,7 @@ export const SkeletonPage = () => {
   // 创建一个假数据数组，用于在FlatList中展示Skeleton元素
   const data = Array.from({ length: 15 })
   // 渲染Skeleton元素的函数
-  const renderSkeletonItem = ({ item, index }) => {
+  const renderSkeletonItem = ({ index }: { index: number }) => {
     return (
       <View style={styles.skeletonItem}>
         <Skeleton

@@ -1,8 +1,7 @@
 import { Image, Text, View } from 'react-native'
 import { AdvancedNewsType } from '.'
-
 export function AdvancedNewsItem(props: AdvancedNewsType) {
-  const { hotSpot, title, imageUrl, commnetNum, medium } = props
+  const { hotSpot, title, imageUrl, commentNum: commnetNum, medium } = props
   return (
     <View
       style={{
@@ -44,7 +43,9 @@ export function AdvancedNewsItem(props: AdvancedNewsType) {
             borderRadius: 20,
             padding: 10,
           }}
-          source={require('../../asset/avatar.jpg')}
+          source={{
+            uri: imageUrl,
+          }}
           // todo: 这里的soure要替换掉
         />
       </View>

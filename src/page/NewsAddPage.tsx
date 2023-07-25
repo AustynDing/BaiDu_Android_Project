@@ -1,7 +1,6 @@
 import { Icon } from '@rneui/themed'
 import React from 'react'
 import {
-  Alert,
   Button,
   Image,
   StyleSheet,
@@ -12,8 +11,23 @@ import {
 } from 'react-native'
 import * as ImagePicker from 'react-native-image-picker'
 import { HeaderTab } from '../components/HeaderTab'
+import { AdvancedNewsType } from '../components/News'
+import {
+  NewsAddProvider,
+  useNewsAddDispatch,
+  useNewsAddFormData,
+} from '../components/News/NewsAddContext'
+
+export function NewsAddPageContainer() {
+  return (
+    <NewsAddProvider>
+      <NewsAddPage />
+    </NewsAddProvider>
+  )
+}
 
 export function NewsAddPage() {
+  const dispatch = useNewsAddDispatch()
   return (
     <View style={styles.container}>
       <HeaderTab>
@@ -26,6 +40,13 @@ export function NewsAddPage() {
         placeholder="请输入新闻标题"
         height={50}
         numberOfLines={1}
+        field="title"
+      />
+      <ItemContainer
+        title="新闻媒体"
+        height={50}
+        placeholder="请输入新闻媒体"
+        field="medium"
       />
       <View
         style={{
@@ -34,14 +55,21 @@ export function NewsAddPage() {
         }}
       >
         <UploadPhotoContainer title="略缩图" />
-        <UploadPhotoContainer title="头图" />
+        {/* <UploadPhotoContainer title="头图" /> */}
+        {/* UI图中给的头图的需求不明确，作用不大，所以删除了 */}
       </View>
-      <ItemContainer title="摘要" placeholder="请输入新闻摘要" height={100} />
+      <ItemContainer
+        title="摘要"
+        placeholder="请输入新闻摘要"
+        height={100}
+        field="abstract"
+      />
       <ItemContainer
         title="正文"
         placeholder="请输入新闻内容"
         height={250}
         numberOfLines={25}
+        field="content"
       />
       <View
         style={{
@@ -50,7 +78,10 @@ export function NewsAddPage() {
           marginRight: 5,
         }}
       >
-        <Button onPress={() => Alert.alert('add news')} title="添加新闻条目" />
+        <Button
+          onPress={() => dispatch({ type: 'SUBMIT' })}
+          title="添加新闻条目"
+        />
       </View>
     </View>
   )
@@ -62,6 +93,7 @@ function UploadPhotoContainer(props: { title: string }) {
   const deletePhoto = React.useCallback(() => {
     setResponse(null)
   }, [])
+  const dispatch = useNewsAddDispatch()
   const responseCallback = React.useCallback(
     (response: ImagePicker.ImagePickerResponse) => {
       if (response.didCancel) {
@@ -70,6 +102,15 @@ function UploadPhotoContainer(props: { title: string }) {
         console.log('ImagePicker Error: ', response.errorMessage)
       } else if (response.assets) {
         setResponse(response)
+        if (response.assets[0].uri) {
+          dispatch({
+            value: response.assets[0].uri,
+            type: 'UPDATE_FIELD',
+            field: 'imageUrl',
+          })
+        } else {
+          console.log(response.assets)
+        }
       }
     },
     [],
@@ -163,9 +204,11 @@ function ItemContainer(props: {
   placeholder: string
   height: number
   numberOfLines?: number
+  field: keyof AdvancedNewsType
 }) {
-  const { title, placeholder, height, numberOfLines } = props
-  const [text, onChangeText] = React.useState('')
+  const { title, placeholder, height, numberOfLines, field } = props
+  const dispatch = useNewsAddDispatch()
+  const value = useNewsAddFormData()[field]
   return (
     <View
       style={[
@@ -191,8 +234,10 @@ function ItemContainer(props: {
         scrollEnabled={true}
         numberOfLines={numberOfLines ?? 10}
         placeholder={placeholder}
-        value={text}
-        onChangeText={val => onChangeText(val)}
+        value={value as string}
+        onChangeText={val =>
+          dispatch({ type: 'UPDATE_FIELD', field, value: val })
+        }
         style={{
           borderStyle: 'solid',
           borderColor: '#888686',
