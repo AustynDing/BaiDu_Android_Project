@@ -1,74 +1,36 @@
-import { AdvancedNewsType, NormalNewsType } from '.'
+import { NewsType } from '.'
 
-export const Data: (NormalNewsType | AdvancedNewsType)[] = [
+export const initNewsData: NewsType[] = [
   {
     title: '这些重大问题，习近平的回答掷地有声',
     top: true,
     medium: '新华社新媒体',
-    newsUrl: '',
     type: 'normal',
+    abstract: '中国国家主席习近平在最近的一次讲话中对一系列重大问题做出了回答，其言辞掷地有声，引起了广泛的关注和讨论',
+    content: '在讲话中，习近平针对国内外的重要议题发表了深刻的见解和重要观点。他首先强调了全球气候变化问题的紧迫性，呼吁各国共同努力，推动绿色发展，保护地球家园。\
+    习近平还就国际贸易和经济合作阐述了他的看法。他强调了多边主义的重要性，并呼吁各国加强合作，共同维护自由贸易体系，推动全球经济稳定和繁荣。\
+    此外，习近平还就地区热点问题表明了中国政府的立场。他呼吁通过对话和协商解决分歧，维护地区的和平与稳定。  \
+    在国内事务方面，习近平谈到了教育、医疗、就业等重要议题。他表示中国政府将持续加大对教育和医疗领域的投入，努力提高人民群众的生活水平，推动全面建设小康社会的目标。\
+    习近平的这次讲话掷地有声，充分展现了中国领导人的智慧和担当，也为未来的发展指明了方向。这些重要观点将成为国内外舆论热议的焦点，影响着国际社会的走向和中国的未来发展。'
   },
   {
     title: '这些重大问题，习近平的回答掷地有声',
     top: true,
     medium: '新华社新媒体',
-    newsUrl: '',
     type: 'normal',
-  },
-  {
-    title: '蔡英文财产曝光：存款5406万，名下拥有6笔不动产',
-    hotSpot: true,
-    commnetNum: 120,
-    newsUrl: '../../asset/avatar.jpg',
-    medium: '人民日报海外网',
-    type: 'advanced',
-  },
-  {
-    title: '蔡英文财产曝光：存款5406万，名下拥有6笔不动产',
-    hotSpot: true,
-    commnetNum: 120,
-    newsUrl: '../../asset/avatar.jpg',
-    medium: '人民日报海外网',
-    type: 'advanced',
-  },
-  {
-    title: '蔡英文财产曝光：存款5406万，名下拥有6笔不动产',
-    hotSpot: true,
-    commnetNum: 120,
-    newsUrl: '../../asset/avatar.jpg',
-    medium: '人民日报海外网',
-    type: 'advanced',
-  },
-  {
-    title: '蔡英文财产曝光：存款5406万，名下拥有6笔不动产',
-    hotSpot: true,
-    commnetNum: 120,
-    newsUrl: '../../asset/avatar.jpg',
-    medium: '人民日报海外网',
-    type: 'advanced',
-  },
-  {
-    title: '蔡英文财产曝光：存款5406万，名下拥有6笔不动产',
-    hotSpot: true,
-    commnetNum: 120,
-    newsUrl: '../../asset/avatar.jpg',
-    medium: '人民日报海外网',
-    type: 'advanced',
-  },
-  {
-    title: '蔡英文财产曝光：存款5406万，名下拥有6笔不动产',
-    hotSpot: true,
-    commnetNum: 120,
-    newsUrl: '../../asset/avatar.jpg',
-    medium: '人民日报海外网',
-    type: 'advanced',
-  },
-  {
-    title: '蔡英文财产曝光：存款5406万，名下拥有6笔不动产',
-    hotSpot: true,
-    commnetNum: 120,
-    newsUrl: '../../asset/avatar.jpg',
-    medium: '人民日报海外网',
-    type: 'advanced',
-  },
-]
+    abstract: '中国国家主席习近平在最近的一次讲话中对一系列重大问题做出了回答，其言辞掷地有声，引起了广泛的关注和讨论',
+    content: '在讲话中，习近平针对国内外的重要议题发表了深刻的见解和重要观点。他首先强调了全球气候变化问题的紧迫性，呼吁各国共同努力，推动绿色发展，保护地球家园。\
+    习近平还就国际贸易和经济合作阐述了他的看法。他强调了多边主义的重要性，并呼吁各国加强合作，共同维护自由贸易体系，推动全球经济稳定和繁荣。\
+    此外，习近平还就地区热点问题表明了中国政府的立场。他呼吁通过对话和协商解决分歧，维护地区的和平与稳定。  \
+    在国内事务方面，习近平谈到了教育、医疗、就业等重要议题。他表示中国政府将持续加大对教育和医疗领域的投入，努力提高人民群众的生活水平，推动全面建设小康社会的目标。\
+    习近平的这次讲话掷地有声，充分展现了中国领导人的智慧和担当，也为未来的发展指明了方向。这些重要观点将成为国内外舆论热议的焦点，影响着国际社会的走向和中国的未来发展。'
+  },]
+  // {
+  //   title: '蔡英文财产曝光：存款5406万，名下拥有6笔不动产',
+  //   hotSpot: true,
+  //   commentNum: 120,
+  //   medium: '人民日报海外网',
+  //   type: 'advanced',
+  //   imageUrl:
+  //     'http://android-demo0.oss-cn-hangzhou.aliyuncs.com/267ba49f8e4ab8d8bdb4e50774a5624e.jpg?OSSAccessKeyId=LTAI5tD5kdnqnWeH7dtogvE5&Expires91466397&Signature=AYdYVrBug%2F9S7bbzNpNOjCx01%2Fo%3D',
+  // },

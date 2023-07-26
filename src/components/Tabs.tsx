@@ -1,12 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Icon } from '@rneui/base'
 import React from 'react'
-import { useScreens } from '../hooks/useScreens'
 import { HomeScreen, ProfilePage, TabPage, VideoPreviewPage } from '../page'
 const Tab = createBottomTabNavigator()
 
 export const BottomTabs = () => {
-  const screens = useScreens()
   return (
     <Tab.Navigator
       initialRouteName="Home"

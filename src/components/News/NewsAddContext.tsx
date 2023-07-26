@@ -1,7 +1,8 @@
 import React from 'react'
-import { useDB } from '../../database/DBContext'
+import { ResultSet } from 'react-native-sqlite-storage'
 import { addNewsItem } from '../../database/db-service-news'
 import { AdvancedNewsType, newsType } from './index'
+import { useDB } from '../../database/DBContext'
 type NewsAddContextType = {
     formData: AdvancedNewsType
     dispatch: React.Dispatch<Action>
@@ -15,7 +16,7 @@ const initialFormData: AdvancedNewsType = {
     id: '',
     title: '',
     medium: '',
-    type: 'normal',
+    type: 'advanced',
     abstract: '',
     content: '',
     top: false,
@@ -26,7 +27,6 @@ const initialFormData: AdvancedNewsType = {
 const NewsAddContext = React.createContext<NewsAddContextType>({
     formData: initialFormData,
     dispatch: function (value: Action): void {
-        console.log(value)
         throw new Error('Function not implemented.')
     },
 })
@@ -41,19 +41,21 @@ type Action =
     | { type: 'CLEAN' }
 
 function newsReducer(state: AdvancedNewsType, action: Action) {
-    const db = useDB()
     switch (action.type) {
         case 'UPDATE_FIELD':
             return { ...state, [action.field]: action.value }
         case 'SUBMIT':
             // 在这里执行提交逻辑
-            const addNews = React.useCallback(async (news: AdvancedNewsType) => {
-                await addNewsItem(db, news)
-            }, [db])
+            const addNews = async (news: AdvancedNewsType) => {
+                return await addNewsItem(news)
+            }
             addNews(state)
-            console.log('提交的数据:', state)
+                .then((id: [ResultSet]) => {
+                    // console.log(id,id[0].rows.item)
+                })
+                .catch((err) => console.log(err))
             // 在这里可以调用API将数据提交到后端或进行其他处理
-            return initialFormData
+            return state
         case 'CLEAN':
             return initialFormData
         default:
@@ -64,7 +66,6 @@ function newsReducer(state: AdvancedNewsType, action: Action) {
 export function NewsAddProvider({ children }: { children: any }) {
     // 使用useReducer定义state和dispatch
     const [formData, dispatch] = React.useReducer(newsReducer, initialFormData)
-
     return (
         <NewsAddContext.Provider value={{ formData, dispatch }}>
             {children}

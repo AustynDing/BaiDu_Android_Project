@@ -10,8 +10,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useScreens } from './src/hooks/useScreens';
-import { HomePage, NewsAddPage, SearchInputPage, VideoPlayPage, VideoPreviewPage, WeatherPage } from './src/page';
-
+import { HomePage, NewsAddPage, NewsAddPageContainer, SearchInputPage, VideoPlayPage, VideoPreviewPage, WeatherPage } from './src/page';
+import { DBProvider } from './src/database/DBContext';
+import { SQLiteDemo } from './src/database/SQLiteDemo';
+import { Skeleton } from '@rneui/themed';
+import LinearGradient from 'react-native-linear-gradient';
+import {SkeletonPage} from './src/page'
 const Stack = createNativeStackNavigator()
 const screens = useScreens()
 
@@ -19,6 +23,8 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaProvider>
+      <DBProvider>
+        {/* <SQLiteDemo/> */}
       <NavigationContainer>
         <Stack.Navigator initialRouteName={screens.Home}>
           <Stack.Group>
@@ -37,7 +43,7 @@ function App(): JSX.Element {
             />
             <Stack.Screen
               name={screens.NewsAdd}
-              component={NewsAddPage}
+              component={NewsAddPageContainer}
               options={{ headerShown: false }}
             />
             <Stack.Screen
@@ -60,6 +66,7 @@ function App(): JSX.Element {
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>
+      </DBProvider>
     </SafeAreaProvider>
   );
 }

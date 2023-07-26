@@ -11,9 +11,9 @@ import {
 import {
   AdvancedNewsItem,
   AdvancedNewsType,
-  Data,
   NormalNewsItem,
   NormalNewsType,
+  initNewsData,
 } from '../components/News'
 import { SearchBar } from '../components/SearchBar'
 import { BottomTabs } from '../components/Tabs'
@@ -24,6 +24,8 @@ import {
 } from '../components/Weather/data'
 import { usePageNavigation } from '../hooks/usePageNavigation'
 import useStickyHeader from '../hooks/useStickyHeader'
+import { NewsListProvider, useFetchNewsList, useNewsList } from '../components/News/NewsListContext'
+import { useFocusEffect } from '@react-navigation/native'
 
 export const HomePage = () => {
   return (
@@ -88,18 +90,29 @@ export function HomeScreen({ navigation }) {
         <SearchBar />
       </StickyHeader>
       <LogoContainer />
-      <NewsList />
+      <NewsListProvider>
+        <NewsList />
+      </NewsListProvider>
     </Animated.ScrollView>
   )
 }
 
 function NewsList() {
+  const newsList = useNewsList()
+  const fetchNewsList = useFetchNewsList()
+  useFocusEffect(React.useCallback(
+    () => {
+      fetchNewsList()
+      .then((value) => console.log(value))
+      .catch((error)=> console.error(error) )
+    }
+  ,[]))
   return (
     <FlatList
       style={{
         padding: 20,
       }}
-      data={Data}
+      data={newsList}
       renderItem={({ item }) => {
         if (item.type === 'normal')
           return <NormalNewsItem {...(item as NormalNewsType)} />
@@ -107,6 +120,7 @@ function NewsList() {
           return <AdvancedNewsItem {...(item as AdvancedNewsType)} />
         return <Text>Error!!!</Text>
       }}
+      keyExtractor={(item,index) => JSON.stringify(item)+index}
     />
   )
 }

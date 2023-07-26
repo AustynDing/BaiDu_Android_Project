@@ -17,12 +17,15 @@ import {
   useNewsAddDispatch,
   useNewsAddFormData,
 } from '../components/News/NewsAddContext'
+import { NewsListProvider } from '../components/News/NewsListContext'
 
 export function NewsAddPageContainer() {
   return (
-    <NewsAddProvider>
-      <NewsAddPage />
-    </NewsAddProvider>
+    <NewsListProvider>
+      <NewsAddProvider>
+        <NewsAddPage />
+      </NewsAddProvider>
+    </NewsListProvider>
   )
 }
 
@@ -155,8 +158,8 @@ function UploadPhotoContainer(props: { title: string }) {
         {response ? (
           response.assets &&
           response.assets.map(({ uri }: { uri: string }) => (
-            <View style={styles.imageContainer}>
-              <View key={uri}>
+            <View key={uri} style={styles.imageContainer}>
+              <View >
                 <Image
                   resizeMode="cover"
                   resizeMethod="scale"
