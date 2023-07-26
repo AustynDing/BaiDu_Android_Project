@@ -1,7 +1,12 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Icon } from '@rneui/base'
 import React from 'react'
-import { HomeScreen, ProfilePage, TabPage, VideoPreviewPage } from '../page'
+import {
+  HomeScreen,
+  ProfilePageContainer,
+  TabPage,
+  VideoPreviewPage,
+} from '../page'
 const Tab = createBottomTabNavigator()
 
 export const BottomTabs = () => {
@@ -43,7 +48,7 @@ export const BottomTabs = () => {
       />
       <Tab.Screen
         name={TabPage.PROFILE_PAGE}
-        component={ProfilePage}
+        component={ProfilePageContainer}
         options={{
           tabBarLabel: TabPage.PROFILE_PAGE,
           tabBarIcon: ({ color, size }) => (

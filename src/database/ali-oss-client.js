@@ -30,7 +30,7 @@ function generateRandomString(length) {
     .slice(0, length)
 }
 export async function uploadImage(
-  localFilePath = 'D:\\Android_Learn\\AwesomeProject\\src\\asset\\weather_sunny_bg.jpg',
+  localFilePath = 'D:\\Android_Learn\\AwesomeProject\\src\\asset\\avatar.jpg',
 ) {
   try {
     // 生成随机图片名，保留后缀一致
@@ -58,7 +58,7 @@ async function generateSignedUrl(ossObjectName, expirationInSeconds) {
       expires: expirationInSeconds, // 过期时间，单位：秒
       method: 'GET', // 请求方法，可以是 'GET'、'PUT'、'POST'、'DELETE' 等
     })
-
+    console.log(signedUrl)
     return signedUrl
   } catch (error) {
     console.error('生成URL失败:', error)
