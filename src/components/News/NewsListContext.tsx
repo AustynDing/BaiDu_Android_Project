@@ -25,12 +25,22 @@ export function NewsListProvider({ children }: { children: any }) {
         try {
             const results = await getNewsItems()
             if (results.length) {
-                results.forEach((value) => addNewsInList(value))
+                results
+                .filter((result) => {
+                    return !newsList.some((news) => news.id === result.id)
+                })
+                .forEach((value) => {
+                    addNewsInList(value)
+                    // bug newsList的更新是异步的，导致多次调用的addNewsInList
+                    // 使用的都是相同的旧newsList值，因此可能会导致更新不及时或者覆盖的问题
+                    // --- tab页的缓存导致newList和渲染出的无法一致，newList中的数据落后于已经渲染的从数据库中加载的数据
+                    // 因此无法实现filter
+                })
             }
         } catch (error) {
             console.error(error)
         }
-    }, [])
+    }, [addNewsInList,newsList])
     return (
         <NewsListContext.Provider value={{ newsList, addNewsInList, fetchNewsList }}>
             {children}

@@ -22,6 +22,7 @@ export const BottomTabs = () => {
             <Icon type="font-awesome" name="home" color={color} size={size} />
           ),
           headerShown: false,
+          unmountOnBlur:true, // 一个不太机智的办法：切换tab页时取消navigation自带的缓存，这样newsList就不会使用旧数据了
         }}
       />
       <Tab.Screen
