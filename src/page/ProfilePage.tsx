@@ -16,6 +16,7 @@ import {
   useUserDispatch,
   useUserInfo,
 } from '../components/User/UserInfoContext'
+import { useFocusEffect } from '@react-navigation/native'
 
 export const ProfilePageContainer = () => {
   return (
@@ -101,7 +102,10 @@ export const ProfilePage = () => {
                     setModalVisible(!modalVisible)
                     dispatch({
                       type: 'UPDATE_NICKNAME',
-                      payload: text,
+                      payload: {
+                        value: text,
+                        username: initData.username,
+                      },
                     })
                   }}
                 >
@@ -133,6 +137,7 @@ function UploadPhotoContainer() {
   const [response, setResponse] =
     React.useState<ImagePicker.ImagePickerResponse>()
   const dispatch = useUserDispatch()
+  const username = useUserInfo().username
   const initAvatar = useUserInfo().avatarUrl
   const responseCallback = React.useCallback(
     (response: ImagePicker.ImagePickerResponse) => {
@@ -145,7 +150,10 @@ function UploadPhotoContainer() {
         if (response.assets[0].uri) {
           dispatch({
             type: 'UPDATE_AVATAR',
-            payload: response.assets[0].uri,
+            payload: {
+              value: response.assets[0].uri,
+              username,
+            },
           })
         } else {
           console.log(response.assets)

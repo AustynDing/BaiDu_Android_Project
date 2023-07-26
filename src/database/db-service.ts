@@ -12,15 +12,26 @@ export type ToDoItem = {
 
 export const TABLE_NAME = {
   NEWS_TABLE: 'newsData',
+  USER_TABLE: 'userData',
 }
 
 const tableName = 'todoData'
 
 enablePromise(true)
 
-export const getDBConnection = async () => {
-  return openDatabase({ name: 'todo-data.db', location: 'default' })
-}
+// 使用IIFE+闭包缓存数据库连接
+export const getDBConnection = (() => {
+  let dbConnection: SQLiteDatabase
+  return async () => {
+    if (!dbConnection) {
+      dbConnection = await openDatabase({
+        name: 'androidDemo.db',
+        location: 'default',
+      })
+    }
+    return dbConnection
+  }
+})()
 
 export const createTable = async (db: SQLiteDatabase) => {
   // create table if not exists
