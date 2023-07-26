@@ -2,19 +2,12 @@ import { Icon } from '@rneui/themed'
 import React from 'react'
 import {
   Animated,
-  FlatList,
   StyleSheet,
   Text,
   TouchableHighlight,
   View,
 } from 'react-native'
-import {
-  AdvancedNewsItem,
-  AdvancedNewsType,
-  NormalNewsItem,
-  NormalNewsType,
-  initNewsData,
-} from '../components/News'
+import { NewsListProvider } from '../components/News/NewsListContext'
 import { SearchBar } from '../components/SearchBar'
 import { BottomTabs } from '../components/Tabs'
 import {
@@ -24,8 +17,7 @@ import {
 } from '../components/Weather/data'
 import { usePageNavigation } from '../hooks/usePageNavigation'
 import useStickyHeader from '../hooks/useStickyHeader'
-import { NewsListProvider, useFetchNewsList, useNewsList } from '../components/News/NewsListContext'
-import { useFocusEffect } from '@react-navigation/native'
+const NewsList = React.lazy(() => import('../components/News/NewsList'))
 
 export const HomePage = () => {
   return (
@@ -56,7 +48,7 @@ function LogoContainer() {
   )
 }
 
-export function HomeScreen({ navigation }) {
+export function HomeScreen({ navigation }: { navigation: any }) {
   const scrollY = React.useRef(new Animated.Value(0)).current
   const { StickyHeader } = useStickyHeader()
   return (
@@ -91,41 +83,15 @@ export function HomeScreen({ navigation }) {
       </StickyHeader>
       <LogoContainer />
       <NewsListProvider>
-        <NewsList />
+        <React.Suspense>
+          <NewsList />
+        </React.Suspense>
       </NewsListProvider>
     </Animated.ScrollView>
   )
 }
 
-function NewsList() {
-  const newsList = useNewsList()
-  const fetchNewsList = useFetchNewsList()
-  useFocusEffect(React.useCallback(
-    () => {
-      fetchNewsList()
-      .then((value) => console.log(value))
-      .catch((error)=> console.error(error) )
-    }
-  ,[]))
-  return (
-    <FlatList
-      style={{
-        padding: 20,
-      }}
-      data={newsList}
-      renderItem={({ item }) => {
-        if (item.type === 'normal')
-          return <NormalNewsItem {...(item as NormalNewsType)} />
-        if (item.type === 'advanced')
-          return <AdvancedNewsItem {...(item as AdvancedNewsType)} />
-        return <Text>Error!!!</Text>
-      }}
-      keyExtractor={(item,index) => JSON.stringify(item)+index}
-    />
-  )
-}
-
-function AddNewsIcon({ navigation }) {
+function AddNewsIcon({ navigation }: { navigation: any }) {
   const { goToNewsAddPage } = usePageNavigation()
   return (
     <View
@@ -148,7 +114,7 @@ function AddNewsIcon({ navigation }) {
   )
 }
 
-function WeatherForcast({ navigation }) {
+function WeatherForcast({ navigation }: { navigation: any }) {
   const { position, temperature, AQI, nowWeather } = weatherData
   const { goToWeatherPage } = usePageNavigation()
   return (

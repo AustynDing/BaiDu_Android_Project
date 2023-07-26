@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ViewToken,
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import Video from 'react-native-video'
@@ -16,17 +17,23 @@ import { VideoItemType, data } from '../components/Vedio'
 
 const ItemContext = React.createContext({})
 
-export function VideoPlayPage({ navigation }) {
+export function VideoPlayPage({ navigation }: { navigation: any }) {
   const [currentItem, setCurrentItem] = React.useState(0)
   const screenHeight = Dimensions.get('window').height
   // 当用户滚动列表时，从不可见的列表项切换到可见的列表项时触发。
-  const onViewableItemsChanged = React.useRef(({ viewableItems }) => {
-    // 可以理解为，只要不是当前再页面上的item 它的状态就应该暂停
-    // 只有100%呈现再页面上的item（只会有一个）它的播放器是播放状态
-    if (viewableItems.length === 1) {
-      setCurrentItem(viewableItems[0].index)
-    }
-  })
+  const onViewableItemsChanged = React.useRef(
+    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+      // 可以理解为，只要不是当前再页面上的item 它的状态就应该暂停
+      // 只有100%呈现再页面上的item（只会有一个）它的播放器是播放状态
+      if (!viewableItems[0].index) {
+        console.error('VideoPlayPage Error')
+        return
+      }
+      if (viewableItems.length === 1) {
+        setCurrentItem(viewableItems[0].index)
+      }
+    },
+  )
   const viewConfigRef = React.useRef({
     viewAreaCoveragePercentThreshold: 80, // item滑动80%部分才会到下一个
   })

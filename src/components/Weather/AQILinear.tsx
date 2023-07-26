@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, LayoutChangeEvent, StyleSheet, Text, View } from 'react-native'
 import { weatherData } from './data'
 
 export function AQILinear() {
@@ -14,7 +14,7 @@ export function AQILinear() {
   const thresholds = [50, 100, 150, 200, 250]
   const [marginLeftValue, setMarginLeftValue] = React.useState(0)
   const [layout, setLayout] = React.useState({ width: 0, height: 0 })
-  const onLayoutHandler = event => {
+  const onLayoutHandler = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout // 获取布局信息
     setLayout({ width, height })
   }

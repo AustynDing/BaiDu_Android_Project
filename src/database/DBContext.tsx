@@ -46,7 +46,6 @@ export function DBProvider({ children }: { children: any }) {
     try {
       const initializeDB = async () => {
         const connection = await getDBConnection()
-        console.log('here',connection)
         setDB(connection)
         setTimeout(() => {
           setIsDBReady(true) // 模拟加载数据库的情况
@@ -68,4 +67,3 @@ export function DBProvider({ children }: { children: any }) {
 export const useDB = () => React.useContext(DBContext).db
 
 export const useDBLoadingState = () => React.useContext(DBContext).isDBReady
-

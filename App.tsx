@@ -23,7 +23,7 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaProvider>
-      <DBProvider>
+      {/* <DBProvider> */}
         {/* <SQLiteDemo/> */}
       <NavigationContainer>
         <Stack.Navigator initialRouteName={screens.Home}>
@@ -66,7 +66,7 @@ function App(): JSX.Element {
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>
-      </DBProvider>
+      {/* </DBProvider> */}
     </SafeAreaProvider>
   );
 }

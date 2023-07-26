@@ -1,5 +1,6 @@
 export type newsType = 'normal' | 'advanced'
 export type NormalNewsType = {
+  id: number
   title: string // 新闻标题
   top?: boolean // 是否置顶
   medium: string // 新闻媒体
@@ -13,7 +14,7 @@ export type AdvancedNewsType = {
   commentNum?: number // 评论数-设置1-1000的随机默认值，因为没有实现评论的需求
 } & NormalNewsType
 
-export type NewsType = NormalNewsType | AdvancedNewsType 
+export type NewsType = NormalNewsType | AdvancedNewsType
 export * from './AdvancedNewsItem'
 export * from './NormalNewsItem'
 export * from './data'

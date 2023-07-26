@@ -159,7 +159,7 @@ function UploadPhotoContainer(props: { title: string }) {
           response.assets &&
           response.assets.map(({ uri }: { uri: string }) => (
             <View key={uri} style={styles.imageContainer}>
-              <View >
+              <View>
                 <Image
                   resizeMode="cover"
                   resizeMethod="scale"
