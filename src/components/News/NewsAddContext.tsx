@@ -45,7 +45,7 @@ function newsReducer(state: AdvancedNewsType, action: Action) {
         return await addNewsItem(news)
       }
       addNews(state)
-        .then((id: [ResultSet]) => {
+        .then((id) => {
           // console.log(id,id[0].rows.item)
         })
         .catch(err => console.log(err))

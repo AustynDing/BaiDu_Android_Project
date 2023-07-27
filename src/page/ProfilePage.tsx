@@ -16,7 +16,6 @@ import {
   useUserDispatch,
   useUserInfo,
 } from '../components/User/UserInfoContext'
-import { useFocusEffect } from '@react-navigation/native'
 
 export const ProfilePageContainer = () => {
   return (

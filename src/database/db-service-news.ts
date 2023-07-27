@@ -1,25 +1,10 @@
 import {
-  enablePromise,
-  openDatabase,
-  SQLiteDatabase,
+  enablePromise
 } from 'react-native-sqlite-storage'
 import { AdvancedNewsType } from '../components/News'
-import { TABLE_NAME } from './db-service'
+import { getDBConnection, TABLE_NAME } from './db-service'
 
 enablePromise(true)
-// 使用IIFE+闭包缓存数据库连接
-export const getDBConnection = (() => {
-  let dbConnection: SQLiteDatabase
-  return async () => {
-    if (!dbConnection) {
-      dbConnection = await openDatabase({
-        name: 'androidDemo.db',
-        location: 'default',
-      })
-    }
-    return dbConnection
-  }
-})()
 
 export const createNewsTable = async () => {
   const db = await getDBConnection()
@@ -68,14 +53,44 @@ export const getNewsItems = async (): Promise<AdvancedNewsType[]> => {
 }
 
 export const addNewsItem = async (item: AdvancedNewsType) => {
-  await createNewsTable()
-  const db = await getDBConnection()
-  const insertQuery =
-    `INSERT OR REPLACE INTO ${TABLE_NAME.NEWS_TABLE}(title,medium,type,top,abstract,content,hotSpot,imageUrl,commentNum) values` +
-    `(${"'" + item.title + "'"},${"'" + item.medium + "'"},${
-      "'" + item.type + "'"
-    },${item.top ? 1 : 0},${"'" + item.abstract + "'"},${
-      "'" + item.content + "'"
-    },${item.hotSpot ? 1 : 0},${"'" + item.imageUrl + "'"},${item.commentNum})`
-  return db.executeSql(insertQuery)
+  try {
+    // 确保新闻表已经存在，如果不存在则创建
+    await createNewsTable()
+
+    // 获取数据库连接
+    const db = await getDBConnection()
+
+    // 执行插入操作
+    const insertQuery = `
+    INSERT INTO ${TABLE_NAME.NEWS_TABLE}
+    (title, top, medium, type, abstract, content, hotSpot, imageUrl, commentNum)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `
+    const params = [
+      item.title,
+      item.top || 0,
+      item.medium,
+      item.type,
+      item.abstract,
+      item.content,
+      item.hotSpot || 1,
+      item.imageUrl,
+      item.commentNum,
+    ]
+    // const insertQuery =
+    //   `INSERT OR REPLACE INTO ${TABLE_NAME.NEWS_TABLE}(title,medium,type,top,abstract,content,hotSpot,imageUrl,commentNum) values` +
+    //   `(${"'" + item.title + "'"},${"'" + item.medium + "'"},${"'" + item.type + "'"
+    //   },${item.top ? 1 : 0},${"'" + item.abstract + "'"},${"'" + item.content + "'"
+    //   },${item.hotSpot ? 1 : 0},${"'" + item.imageUrl + "'"},${item.commentNum})`
+    // bug: 模板字符串解析的时候，反斜杠会导致普通字符变成转义字符
+    const results = await db.executeSql(insertQuery, params)
+    if (results[0].insertId) {
+      return results
+    } else {
+      return null
+    }
+  } catch (error) {
+    console.log('插入新闻失败:', error)
+    return null
+  }
 }
