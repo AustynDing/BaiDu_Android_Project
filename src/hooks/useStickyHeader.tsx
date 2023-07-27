@@ -1,5 +1,5 @@
 import React from 'react'
-import { Animated, StyleSheet } from 'react-native'
+import { Animated, LayoutChangeEvent, StyleSheet } from 'react-native'
 
 interface StickyHeaderProps {
   stickyScrollY: any // 已经滑动的距离
@@ -24,7 +24,7 @@ function StickyHeader(props: StickyHeaderProps) {
   const [stickyLayoutY, setStickyLayoutY] = React.useState(0)
 
   const _onLayout = React.useCallback(
-    event => {
+    (event: LayoutChangeEvent) => {
       if (event && event.nativeEvent) {
         setStickyLayoutY(event.nativeEvent.layout.y)
       }

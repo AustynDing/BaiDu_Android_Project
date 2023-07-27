@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native'
 import React from 'react'
-import { FlatList, Text } from 'react-native'
+import { Text, View } from 'react-native'
 import { AdvancedNewsType, NormalNewsType } from '.'
 import { SkeletonPage } from '../../page'
 import { AdvancedNewsItem } from './AdvancedNewsItem'
@@ -18,21 +18,23 @@ export default function NewsList() {
     }, [isLoading]),
   )
   return isLoading ? (
-    <SkeletonPage />
+    <SkeletonPage num={15} columns={2} />
   ) : (
-    <FlatList
+    // />
+    <View
       style={{
-        padding: 20,
+        padding: 20
       }}
-      data={newsList}
-      renderItem={({ item }) => {
-        if (item.type === 'normal')
-          return <NormalNewsItem {...(item as NormalNewsType)} />
-        if (item.type === 'advanced')
-          return <AdvancedNewsItem {...(item as AdvancedNewsType)} />
-        return <Text>Error!!!</Text>
-      }}
-      keyExtractor={(item, index) => JSON.stringify(item) + index}
-    />
+    >
+      {newsList.map((item, index) => {
+        if (item.type === 'normal') {
+          return <NormalNewsItem key={JSON.stringify(item) + index} {...(item as NormalNewsType)} />
+        }
+        if (item.type === 'advanced') {
+          return <AdvancedNewsItem key={JSON.stringify(item) + index} {...(item as AdvancedNewsType)} />
+        }
+        return <Text>Error!!</Text>
+      })}
+    </View>
   )
 }

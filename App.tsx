@@ -10,21 +10,17 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useScreens } from './src/hooks/useScreens';
-import { HomePage, NewsAddPage, NewsAddPageContainer, SearchInputPage, VideoPlayPage, VideoPreviewPage, WeatherPage } from './src/page';
-import { DBProvider } from './src/database/DBContext';
-import { SQLiteDemo } from './src/database/SQLiteDemo';
-import { Skeleton } from '@rneui/themed';
-import LinearGradient from 'react-native-linear-gradient';
-import {SkeletonPage} from './src/page'
+import { HomePage, NewsAddPageContainer, SearchInputPage, VideoPlayPage, VideoPreviewPage, WeatherPage } from './src/page';
 const Stack = createNativeStackNavigator()
 const screens = useScreens()
+
 
 function App(): JSX.Element {
 
   return (
     <SafeAreaProvider>
       {/* <DBProvider> */}
-        {/* <SQLiteDemo/> */}
+      {/* <SQLiteDemo/> */}
       <NavigationContainer>
         <Stack.Navigator initialRouteName={screens.Home}>
           <Stack.Group>
