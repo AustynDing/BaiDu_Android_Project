@@ -1,11 +1,11 @@
 import { Icon } from '@rneui/base'
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import WebView from 'react-native-webview'
 import { HeaderTab } from '../components/HeaderTab'
 import { SearchBar } from '../components/SearchBar'
 import { usePageNavigation } from '../hooks/usePageNavigation'
-
+import { store, load } from '../utils/storage'
 export function SearchInputPage() {
   const HTML = `
   <!DOCTYPE html>\n
@@ -14,6 +14,37 @@ export function SearchInputPage() {
     </head>
   </html>
   `
+  const initUrl = 'about:blank'
+
+  const [searchHistory, setSearchHistory] = React.useState<string[]>()
+  React.useEffect(() => {
+    load('searchHistory')
+      .then(loadData => {
+        if (loadData) {
+          setSearchHistory(loadData)
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }, [])
+  const [isVisible, toggleVisibility] = React.useState(true)
+  const addSearchHistory = React.useCallback(
+    (searchText: string) => {
+      store(
+        'searchHistory',
+        searchHistory ? [...searchHistory, searchText] : [searchText],
+      )
+        .then(res =>
+          setSearchHistory(prev =>
+            prev ? [...prev, searchText] : [searchText],
+          ),
+        )
+        .catch(err => console.log(err))
+    },
+    [searchHistory],
+  )
+
   // 创建一个引用来获取 WebView 组件的引用
   const webViewRef = React.useRef<WebView | null>(null)
   const { goToHomePage } = usePageNavigation()
@@ -22,6 +53,7 @@ export function SearchInputPage() {
     const escapedText = text.replace(/[']/g, "\\'").replace(/["]/g, '\\"') // 在单引号和双引号前添加转义符号
     // 使用 WebView 组件的 injectJavaScript 方法执行 JavaScript 代码，
     // 将窗口位置跳转到百度页面
+    addSearchHistory(text)
     webViewRef.current?.injectJavaScript(
       `window.location.href = 'https://m.baidu.com/s?word=${escapedText}';`,
     )
@@ -34,6 +66,15 @@ export function SearchInputPage() {
     webViewRef.current?.goBack()
   }
 
+  // searchHistory.map((value,index) =>{
+  //   if(index === 15){
+  //     return <Text>查看更多历史</Text>
+  //   }
+  //   return (
+  //     if()
+  //   )
+  // })
+
   // 导航的前进功能
   const handleGoForward = () => {
     // 使用 WebView 组件的 goForward 方法实现前进
@@ -45,6 +86,33 @@ export function SearchInputPage() {
       <HeaderTab>
         <SearchBar onSubmitEditing={handleSearchSubmit} />
       </HeaderTab>
+      {isVisible && (
+        <View>
+          <Text>历史搜索</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <View style={{ flex: 1 }}>
+              {searchHistory?.map((value, index) => {
+                if (index % 2 === 0) {
+                  return <Text>{value}</Text>
+                }
+                if (index === 15) {
+                  return <Text>查看更多历史</Text>
+                }
+              })}
+            </View>
+            <View style={{ flex: 1 }}>
+              {searchHistory?.map((value, index) => {
+                if (index % 2 === 1) {
+                  return <Text>{value}</Text>
+                }
+                if (index === 15) {
+                  return <Text>查看更多历史</Text>
+                }
+              })}
+            </View>
+          </View>
+        </View>
+      )}
       {/* WebView 组件 */}
       <WebView
         ref={webViewRef} // 将引用赋值给 WebView 组件
@@ -53,6 +121,14 @@ export function SearchInputPage() {
         domStorageEnabled={true} // 允许在 WebView 中使用本地存储
         startInLoadingState={true} // 初始加载时显示加载状态
         source={{ html: HTML }} // source 不可少,否则会报类型转化错误
+        onNavigationStateChange={navState => {
+          console.log(navState.url)
+          if (navState.url === initUrl) {
+            toggleVisibility(true)
+          } else {
+            toggleVisibility(false)
+          }
+        }}
       ></WebView>
       <View
         style={{
