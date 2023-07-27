@@ -1,6 +1,4 @@
-import {
-  enablePromise
-} from 'react-native-sqlite-storage'
+import { enablePromise } from 'react-native-sqlite-storage'
 import { AdvancedNewsType } from '../components/News'
 import { getDBConnection, TABLE_NAME } from './db-service'
 

@@ -8,7 +8,7 @@ import {
   TransactionCallback,
   TransactionErrorCallback,
 } from 'react-native-sqlite-storage'
-import { getDBConnection } from './db-service-news'
+import { getDBConnection } from './db-service'
 
 const initialDB = {
   dbName: '',

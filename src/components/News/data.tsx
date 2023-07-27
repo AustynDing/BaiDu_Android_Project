@@ -2,7 +2,7 @@ import { NewsType } from '.'
 
 export const initNewsData: NewsType[] = [
   {
-    id: -1,
+    id: -2,
     title: '这些重大问题，习近平的回答掷地有声',
     top: true,
     medium: '新华社新媒体',
@@ -17,7 +17,7 @@ export const initNewsData: NewsType[] = [
     习近平的这次讲话掷地有声，充分展现了中国领导人的智慧和担当，也为未来的发展指明了方向。这些重要观点将成为国内外舆论热议的焦点，影响着国际社会的走向和中国的未来发展。',
   },
   {
-    id: 0,
+    id: -1,
     title: '这些重大问题，习近平的回答掷地有声',
     top: true,
     medium: '新华社新媒体',
