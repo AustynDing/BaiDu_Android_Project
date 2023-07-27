@@ -14,10 +14,11 @@ export function HeaderTab(props: {
     <View
       style={{
         flexDirection: 'row',
-        height: 40,
+        height: 65,
         width: '100%',
         alignItems: 'center',
         zIndex: 99,
+        paddingHorizontal: 10,
       }}
     >
       <Icon
@@ -25,9 +26,6 @@ export function HeaderTab(props: {
         type="font-awesome"
         color={arrowColor}
         size={30}
-        style={{
-          paddingHorizontal: 10,
-        }}
         onPress={onPress ? onPress : goBack}
       />
       {children}

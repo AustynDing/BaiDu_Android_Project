@@ -23,15 +23,25 @@ export default function NewsList() {
     // />
     <View
       style={{
-        padding: 20
+        padding: 20,
       }}
     >
       {newsList.map((item, index) => {
         if (item.type === 'normal') {
-          return <NormalNewsItem key={JSON.stringify(item) + index} {...(item as NormalNewsType)} />
+          return (
+            <NormalNewsItem
+              key={JSON.stringify(item) + index}
+              {...(item as NormalNewsType)}
+            />
+          )
         }
         if (item.type === 'advanced') {
-          return <AdvancedNewsItem key={JSON.stringify(item) + index} {...(item as AdvancedNewsType)} />
+          return (
+            <AdvancedNewsItem
+              key={JSON.stringify(item) + index}
+              {...(item as AdvancedNewsType)}
+            />
+          )
         }
         return <Text>Error!!</Text>
       })}

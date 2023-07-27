@@ -17,6 +17,9 @@ export const usePageNavigation = () => {
     goToVideoPlayPage() {
       navigation.push(screens.VedioPlay)
     },
+    goToHomePage() {
+      navigation.navigate(screens.Home)
+    },
     goBack() {
       navigation.goBack()
     },
