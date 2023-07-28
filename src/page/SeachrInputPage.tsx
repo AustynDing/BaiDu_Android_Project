@@ -5,18 +5,12 @@ import WebView from 'react-native-webview'
 import { HeaderTab } from '../components/HeaderTab'
 import { SearchBar } from '../components/SearchBar'
 import { usePageNavigation } from '../hooks/usePageNavigation'
-import { store, load } from '../utils/storage'
-export function SearchInputPage() {
-  const HTML = `
-  <!DOCTYPE html>\n
-  <html>
-    <head>
-    </head>
-  </html>
-  `
-  const initUrl = 'about:blank'
+import { load, store } from '../utils/storage'
 
+export function SearchInputPage() {
   const [searchHistory, setSearchHistory] = React.useState<string[]>()
+  const webViewRef = React.useRef<WebView | null>(null)
+
   React.useEffect(() => {
     load('searchHistory')
       .then(loadData => {
@@ -28,7 +22,9 @@ export function SearchInputPage() {
         console.log(err)
       })
   }, [])
+
   const [isVisible, toggleVisibility] = React.useState(true)
+// 只有在自己写的搜索框中搜索的才会放入搜索历史中
   const addSearchHistory = React.useCallback(
     (searchText: string) => {
       store(
@@ -45,40 +41,13 @@ export function SearchInputPage() {
     [searchHistory],
   )
 
-  // 创建一个引用来获取 WebView 组件的引用
-  const webViewRef = React.useRef<WebView | null>(null)
-  const { goToHomePage } = usePageNavigation()
-  // 处理用户提交的事件
+
   const handleSearchSubmit = (text: string) => {
-    const escapedText = text.replace(/[']/g, "\\'").replace(/["]/g, '\\"') // 在单引号和双引号前添加转义符号
-    // 使用 WebView 组件的 injectJavaScript 方法执行 JavaScript 代码，
-    // 将窗口位置跳转到百度页面
+    const escapedText = text.replace(/[']/g, "\\'").replace(/["]/g, '\\"')
     addSearchHistory(text)
     webViewRef.current?.injectJavaScript(
       `window.location.href = 'https://m.baidu.com/s?word=${escapedText}';`,
     )
-  }
-
-  // 导航的后退功能
-  const handleGoBack = () => {
-    // 使用 WebView 组件的 goBack 方法实现后退
-    // 只支持 SearchBar 中搜索导致的百度页面的切换，不支持百度页面内部点击造成的页面切换
-    webViewRef.current?.goBack()
-  }
-
-  // searchHistory.map((value,index) =>{
-  //   if(index === 15){
-  //     return <Text>查看更多历史</Text>
-  //   }
-  //   return (
-  //     if()
-  //   )
-  // })
-
-  // 导航的前进功能
-  const handleGoForward = () => {
-    // 使用 WebView 组件的 goForward 方法实现前进
-    webViewRef.current?.goForward()
   }
 
   return (
@@ -86,106 +55,139 @@ export function SearchInputPage() {
       <HeaderTab>
         <SearchBar onSubmitEditing={handleSearchSubmit} />
       </HeaderTab>
-      {isVisible && (
-        <View>
-          <Text>历史搜索</Text>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={{ flex: 1 }}>
-              {searchHistory?.map((value, index) => {
-                if (index % 2 === 0) {
-                  return <Text>{value}</Text>
-                }
-                if (index === 15) {
-                  return <Text>查看更多历史</Text>
-                }
-              })}
-            </View>
-            <View style={{ flex: 1 }}>
-              {searchHistory?.map((value, index) => {
-                if (index % 2 === 1) {
-                  return <Text>{value}</Text>
-                }
-                if (index === 15) {
-                  return <Text>查看更多历史</Text>
-                }
-              })}
-            </View>
-          </View>
-        </View>
-      )}
-      {/* WebView 组件 */}
+      {isVisible && <SearchHistoryContainer searchHistory={searchHistory} />}
       <WebView
-        ref={webViewRef} // 将引用赋值给 WebView 组件
+        ref={webViewRef}
         style={styles.webView}
-        javaScriptEnabled={true} // 允许在 WebView 中执行 JavaScript
-        domStorageEnabled={true} // 允许在 WebView 中使用本地存储
-        startInLoadingState={true} // 初始加载时显示加载状态
-        source={{ html: HTML }} // source 不可少,否则会报类型转化错误
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+        startInLoadingState={true}
+        source={{ html: WebViewConfig.HTML }}
         onNavigationStateChange={navState => {
-          console.log(navState.url)
-          if (navState.url === initUrl) {
+          if (navState.url === WebViewConfig.INIT_URL) {
             toggleVisibility(true)
           } else {
             toggleVisibility(false)
           }
         }}
-      ></WebView>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          height: 40,
-        }}
-      >
-        <Icon
-          type="font-awesome"
-          name="home"
-          size={25}
-          onPress={goToHomePage}
-        />
-        <Icon
-          style={{
-            width: 32,
-          }}
-          type="font-awesome"
-          name="angle-left"
-          size={32}
-          onPress={handleGoBack}
-        />
-        <Icon
-          style={{
-            width: 32,
-          }}
-          type="font-awesome"
-          name="angle-right"
-          size={32}
-          onPress={handleGoForward}
-        />
-        <Icon type="font-awesome" name="sticky-note-o" size={20} />
+      />
+      <BottomTab webViewRef={webViewRef} />
+    </View>
+  )
+}
+
+function SearchHistoryContainer({
+  searchHistory,
+}: {
+  searchHistory: string[] | undefined
+}) {
+  return (
+    <View style={styles.historyContainer}>
+      <Text style={styles.boldText}>历史搜索</Text>
+      <View style={styles.historyRow}>
+        <View style={styles.historyColumn}>
+          {searchHistory?.map((value, index) => {
+            if (index % 2 === 0 && index === 9) {
+              return <Text style={styles.historyText}>查看更多历史</Text>
+            }
+            if (index % 2 === 0 && index < 9) {
+              return <Text style={styles.historyText}>{value}</Text>
+            }
+          })}
+        </View>
+        <View style={styles.historyColumn}>
+          {searchHistory?.map((value, index) => {
+            if (index % 2 === 1 && index === 9) {
+              return <Text style={styles.historyText}>查看更多历史</Text>
+            }
+            if (index % 2 === 1 && index < 9) {
+              return <Text style={styles.historyText}>{value}</Text>
+            }
+          })}
+        </View>
       </View>
     </View>
   )
 }
+
+function BottomTab({
+  webViewRef,
+}: {
+  webViewRef: React.MutableRefObject<WebView<{}> | null>
+}) {
+  const { goToHomePage } = usePageNavigation()
+  const handleGoBack = () => {
+    webViewRef.current?.goBack()
+  }
+  const handleGoForward = () => {
+    webViewRef.current?.goForward()
+  }
+
+  return (
+    <View style={styles.bottomTabContainer}>
+      <Icon type="font-awesome" name="home" size={25} onPress={goToHomePage} />
+      <Icon
+        style={styles.icon}
+        type="font-awesome"
+        name="angle-left"
+        size={32}
+        onPress={handleGoBack}
+      />
+      <Icon
+        style={styles.icon}
+        type="font-awesome"
+        name="angle-right"
+        size={32}
+        onPress={handleGoForward}
+      />
+      <Icon type="font-awesome" name="sticky-note-o" size={20} />
+    </View>
+  )
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  buttonContainer: {
+  bottomTabContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingVertical: 10,
+    alignItems: 'center',
+    height: 40,
   },
-  button: {
-    padding: 10,
-    backgroundColor: '#4CAF50',
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
+  icon: {
+    width: 32,
   },
   webView: {
     flex: 1,
   },
+  historyContainer: {
+    marginHorizontal: 10,
+  },
+  boldText: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginVertical: 10,
+  },
+  historyRow: {
+    flexDirection: 'row',
+  },
+  historyColumn: {
+    flex: 1,
+  },
+  historyText: {
+    fontSize: 15,
+    marginTop: 5,
+  },
 })
+
+const WebViewConfig = {
+  HTML:`
+  <!DOCTYPE html>\n
+  <html>
+    <head>
+    </head>
+  </html>
+  `,
+  INIT_URL:'about:blank'
+}
