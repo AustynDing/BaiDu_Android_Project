@@ -2,7 +2,7 @@ import { Avatar, Icon } from '@rneui/base'
 import React from 'react'
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import { SearchBar } from '../components/SearchBar'
+import { ForwardSearchBar } from '../components/SearchBar'
 import { VideoItemType, data } from '../components/Vedio'
 import { usePageNavigation } from '../hooks/usePageNavigation'
 import { formatDuration } from '../utils/formatDuration'
@@ -14,7 +14,7 @@ export function VideoPreviewPage() {
 
   return (
     <View style={{ flex: 1 }}>
-      <SearchBar />
+      <ForwardSearchBar />
       <FlatList
         showsVerticalScrollIndicator={false}
         data={data}

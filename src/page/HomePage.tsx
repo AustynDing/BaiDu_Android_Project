@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native'
 import { NewsListProvider } from '../components/News/NewsListContext'
-import { SearchBar } from '../components/SearchBar'
+import { ForwardSearchBar } from '../components/SearchBar'
 import { BottomTabs } from '../components/Tabs'
 import {
   mapAQIToPollutionLevel,
@@ -79,7 +79,7 @@ export function HomeScreen({ navigation }: { navigation: any }) {
         <AddNewsIcon navigation={navigation} />
       </View>
       <StickyHeader stickyScrollY={scrollY}>
-        <SearchBar />
+        <ForwardSearchBar />
       </StickyHeader>
       <LogoContainer />
       <NewsListProvider>

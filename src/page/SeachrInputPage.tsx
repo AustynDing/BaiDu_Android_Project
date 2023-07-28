@@ -3,14 +3,14 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import WebView from 'react-native-webview'
 import { HeaderTab } from '../components/HeaderTab'
-import { SearchBar } from '../components/SearchBar'
+import { ForwardSearchBar, SearchBarRef } from '../components/SearchBar'
 import { usePageNavigation } from '../hooks/usePageNavigation'
 import { load, store } from '../utils/storage'
 
 export function SearchInputPage() {
   const [searchHistory, setSearchHistory] = React.useState<string[]>()
   const webViewRef = React.useRef<WebView | null>(null)
-
+  const searchBarRef = React.useRef<SearchBarRef>(null)
   React.useEffect(() => {
     load('searchHistory')
       .then(loadData => {
@@ -24,7 +24,7 @@ export function SearchInputPage() {
   }, [])
 
   const [isVisible, toggleVisibility] = React.useState(true)
-// 只有在自己写的搜索框中搜索的才会放入搜索历史中
+  // 只有在自己写的搜索框中搜索的才会放入搜索历史中
   const addSearchHistory = React.useCallback(
     (searchText: string) => {
       store(
@@ -41,7 +41,6 @@ export function SearchInputPage() {
     [searchHistory],
   )
 
-
   const handleSearchSubmit = (text: string) => {
     const escapedText = text.replace(/[']/g, "\\'").replace(/["]/g, '\\"')
     addSearchHistory(text)
@@ -53,7 +52,10 @@ export function SearchInputPage() {
   return (
     <View style={styles.container}>
       <HeaderTab>
-        <SearchBar onSubmitEditing={handleSearchSubmit} />
+        <ForwardSearchBar
+          onSubmitEditing={handleSearchSubmit}
+          ref={searchBarRef}
+        />
       </HeaderTab>
       {isVisible && <SearchHistoryContainer searchHistory={searchHistory} />}
       <WebView
@@ -71,7 +73,7 @@ export function SearchInputPage() {
           }
         }}
       />
-      <BottomTab webViewRef={webViewRef} />
+      <BottomTab webViewRef={webViewRef} searchBarRef={searchBarRef} />
     </View>
   )
 }
@@ -88,20 +90,48 @@ function SearchHistoryContainer({
         <View style={styles.historyColumn}>
           {searchHistory?.map((value, index) => {
             if (index % 2 === 0 && index === 9) {
-              return <Text style={styles.historyText}>查看更多历史</Text>
+              return (
+                <Text
+                  key={JSON.stringify(value) + index}
+                  style={styles.historyText}
+                >
+                  查看更多历史
+                </Text>
+              )
             }
             if (index % 2 === 0 && index < 9) {
-              return <Text style={styles.historyText}>{value}</Text>
+              return (
+                <Text
+                  key={JSON.stringify(value) + index}
+                  style={styles.historyText}
+                >
+                  {value}
+                </Text>
+              )
             }
           })}
         </View>
         <View style={styles.historyColumn}>
           {searchHistory?.map((value, index) => {
             if (index % 2 === 1 && index === 9) {
-              return <Text style={styles.historyText}>查看更多历史</Text>
+              return (
+                <Text
+                  key={JSON.stringify(value) + index}
+                  style={styles.historyText}
+                >
+                  查看更多历史
+                </Text>
+              )
             }
             if (index % 2 === 1 && index < 9) {
-              return <Text style={styles.historyText}>{value}</Text>
+              return (
+                <Text
+                  key={JSON.stringify(value) + index}
+                  style={styles.historyText}
+                >
+                  {value}
+                </Text>
+              )
             }
           })}
         </View>
@@ -112,15 +142,19 @@ function SearchHistoryContainer({
 
 function BottomTab({
   webViewRef,
+  searchBarRef,
 }: {
   webViewRef: React.MutableRefObject<WebView<{}> | null>
+  searchBarRef: React.MutableRefObject<SearchBarRef | null>
 }) {
   const { goToHomePage } = usePageNavigation()
   const handleGoBack = () => {
     webViewRef.current?.goBack()
+    searchBarRef.current?.goBackHistory()
   }
   const handleGoForward = () => {
     webViewRef.current?.goForward()
+    searchBarRef.current?.goForwardHistory()
   }
 
   return (
@@ -182,12 +216,12 @@ const styles = StyleSheet.create({
 })
 
 const WebViewConfig = {
-  HTML:`
+  HTML: `
   <!DOCTYPE html>\n
   <html>
     <head>
     </head>
   </html>
   `,
-  INIT_URL:'about:blank'
+  INIT_URL: 'about:blank',
 }

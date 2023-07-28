@@ -44,7 +44,6 @@ export async function load(key: string): Promise<any | null> {
     if (!data) {
       throw new Error('No data found')
     }
-    console.log(data)
     return JSON.parse(data)
   } catch (error) {
     console.log(error)
@@ -61,7 +60,6 @@ export async function load(key: string): Promise<any | null> {
 export async function store(key: string, value: any): Promise<boolean> {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value))
-    console.log(value)
     return true
   } catch (error) {
     console.log('Error storing data:', error)

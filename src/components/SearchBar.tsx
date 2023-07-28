@@ -9,52 +9,98 @@ import {
 import { usePageNavigation } from '../hooks/usePageNavigation'
 import { useScreens } from '../hooks/useScreens'
 
+export interface SearchBarRef {
+  goBackHistory: () => void
+  goForwardHistory: () => void
+}
 interface SearchBarProps {
   onSubmitEditing?: (text: string) => void
 }
+// 实现搜索框中搜索记录随着页面的切换而切换
+export const ForwardSearchBar = React.forwardRef<SearchBarRef, SearchBarProps>(
+  function SearchBar(props, ref) {
+    const [searchText, setSearchText] = React.useState('')
+    const [searchHistoryStack, setSearchHistoryStack] = React.useState<
+      string[]
+    >([''])
+    const historyPointer = React.useRef(0)
+    const [isFocused, setIsFocused] = React.useState(false)
+    const { goToSearchInputPage } = usePageNavigation()
+    const route = useRoute()
+    const screens = useScreens()
+    const isSearchInputPage = route.name === screens.SearchInput
 
-export function SearchBar({ onSubmitEditing }: SearchBarProps) {
-  const [searchText, setSearchText] = React.useState('')
-  const [isFocused, setIsFocused] = React.useState(false)
-  const { goToSearchInputPage } = usePageNavigation()
-  const route = useRoute()
-  const screens = useScreens()
-  const isSearchInputPage = route.name === screens.SearchInput
-
-  const handleOnSubmitEditing = (
-    event: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
-  ) => {
-    // 当用户提交输入时调用此函数
-    const submittedText = event.nativeEvent.text
-    onSubmitEditing?.(submittedText)
-  }
-  return (
-    <View
-      style={{
-        backgroundColor: '#F2F2F2',
-        height: 65,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        width: '100%',
-      }}
-    >
-      <TextInput
-        style={{
-          flex: 1,
-          borderColor: isFocused ? 'black' : 'gray',
-          borderWidth: 1,
-          borderStyle: 'solid',
-          borderRadius: 15,
-        }}
-        placeholder="搜索或输入网址"
-        value={searchText}
-        onChangeText={setSearchText}
-        onFocus={
-          isSearchInputPage ? () => setIsFocused(true) : goToSearchInputPage
+    const goForwardSearchHistoryStack = React.useCallback(() => {
+      if (historyPointer.current < searchHistoryStack.length - 1) {
+        historyPointer.current++
+        setSearchText(searchHistoryStack[historyPointer.current])
+      }
+    }, [searchHistoryStack])
+    const goBackSearchHistoryStack = React.useCallback(() => {
+      if (historyPointer.current > 0) {
+        historyPointer.current--
+        setSearchText(searchHistoryStack[historyPointer.current])
+      }
+    }, [searchHistoryStack])
+    const pushStack = React.useCallback(
+      (text: string) => {
+        setSearchHistoryStack(prev => [
+          ...prev.slice(0, historyPointer.current + 1),
+          text,
+        ])
+        historyPointer.current++
+      },
+      [searchHistoryStack],
+    )
+    React.useImperativeHandle(
+      ref,
+      () => {
+        return {
+          goForwardHistory: goForwardSearchHistoryStack,
+          goBackHistory: goBackSearchHistoryStack,
         }
-        onBlur={() => setIsFocused(false)}
-        onSubmitEditing={handleOnSubmitEditing}
-      />
-    </View>
-  )
-}
+      },
+      [goBackSearchHistoryStack, goForwardSearchHistoryStack],
+    )
+    const handleOnSubmitEditing = (
+      event: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
+    ) => {
+      // 当用户提交输入时调用此函数
+      const submittedText = event.nativeEvent.text
+      props.onSubmitEditing?.(submittedText)
+      pushStack(submittedText)
+    }
+    return (
+      <View
+        style={{
+          backgroundColor: '#F2F2F2',
+          height: 65,
+          paddingHorizontal: 20,
+          paddingVertical: 10,
+          width: '100%',
+        }}
+      >
+        <TextInput
+          style={{
+            flex: 1,
+            borderColor: isFocused ? 'black' : 'gray',
+            borderWidth: 1,
+            borderStyle: 'solid',
+            borderRadius: 15,
+          }}
+          placeholder="搜索或输入网址"
+          value={searchText}
+          onChangeText={setSearchText}
+          onFocus={
+            isSearchInputPage ? () => setIsFocused(true) : goToSearchInputPage
+          }
+          onBlur={() => setIsFocused(false)}
+          onSubmitEditing={handleOnSubmitEditing}
+        />
+      </View>
+    )
+  },
+)
+ForwardSearchBar.displayName = 'SearchBar'
+// 在开发者工具中查看组件层次结构时，会显示 SearchBar 而不是默认的匿名组件名称，
+// 这有助于更好地理解和调试的应用程序
