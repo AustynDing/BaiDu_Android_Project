@@ -18,10 +18,13 @@ export function HeaderTab(props: {
         width: '100%',
         alignItems: 'center',
         zIndex: 99,
-        paddingHorizontal: 10,
       }}
     >
       <Icon
+        style={{
+          width: 30,
+          height: 30,
+        }}
         name="angle-left"
         type="font-awesome"
         color={arrowColor}

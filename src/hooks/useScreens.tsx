@@ -6,6 +6,7 @@ const SCREENS = {
   VedioPreview: 'VedioPreviewScreen',
   VedioPlay: 'VedioPlayScreen',
   Profile: 'ProfileScreen',
+  NewsDetail: 'NewsDetail',
   // 添加其他屏幕的名称...
 }
 export const useScreens = () => SCREENS

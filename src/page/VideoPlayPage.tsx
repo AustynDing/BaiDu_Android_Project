@@ -173,12 +173,7 @@ function RightBar() {
           width: '100%',
         }}
       >
-        <Avatar
-          rounded
-          source={require('../asset/avatar.jpg')}
-          size={45}
-          onPress={() => console.log('click')}
-        />
+        <Avatar rounded source={require('../asset/avatar.jpg')} size={45} />
       </View>
       <View>
         <Icon name="star" type="font-awesome" size={40} color="#fff" />

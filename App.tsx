@@ -11,6 +11,7 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useScreens } from './src/hooks/useScreens';
 import { HomePage, NewsAddPageContainer, SearchInputPage, VideoPlayPage, VideoPreviewPage, WeatherPage } from './src/page';
+import { NewsDetailPage } from './src/page/NewsDetailPage';
 const Stack = createNativeStackNavigator()
 const screens = useScreens()
 
@@ -36,6 +37,11 @@ function App(): JSX.Element {
                 hostName: 'Austyn',
               }}
               options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name={screens.NewsDetail}
+              component={NewsDetailPage}
+              options={{ headerShown: false}}
             />
             <Stack.Screen
               name={screens.NewsAdd}

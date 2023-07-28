@@ -1,11 +1,12 @@
 import { Icon } from '@rneui/themed'
-import { Text, View } from 'react-native'
+import { Text, View, TouchableOpacity } from 'react-native'
 import { NormalNewsType } from '.'
 
 export function NormalNewsItem(props: NormalNewsType) {
   const { title, medium, top = false, newsUrl } = props
   return (
-    <View
+    <TouchableOpacity
+      activeOpacity={1}
       style={{
         display: 'flex',
         flex: 1,
@@ -35,6 +36,6 @@ export function NormalNewsItem(props: NormalNewsType) {
         ) : null}
         <Text style={{ color: '#9E9E9E' }}>{medium}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }

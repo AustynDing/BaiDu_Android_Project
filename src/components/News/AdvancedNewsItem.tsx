@@ -1,9 +1,12 @@
-import { Image, Text, View } from 'react-native'
+import { Image, Text, View, TouchableOpacity } from 'react-native'
 import { AdvancedNewsType } from '.'
+import { usePageNavigation } from '../../hooks/usePageNavigation'
 export function AdvancedNewsItem(props: AdvancedNewsType) {
   const { hotSpot, title, imageUrl, commentNum: commnetNum, medium } = props
+  const { goToNewsDetailPage } = usePageNavigation()
   return (
-    <View
+    <TouchableOpacity
+      activeOpacity={1}
       style={{
         flex: 1,
         height: 100,
@@ -13,6 +16,7 @@ export function AdvancedNewsItem(props: AdvancedNewsType) {
         borderStyle: 'solid',
         borderTopColor: 'black',
       }}
+      onPress={goToNewsDetailPage}
     >
       <View
         style={{
@@ -49,6 +53,6 @@ export function AdvancedNewsItem(props: AdvancedNewsType) {
           // todo: 这里的soure要替换掉
         />
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
