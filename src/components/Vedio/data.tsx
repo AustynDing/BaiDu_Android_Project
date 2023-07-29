@@ -17,7 +17,8 @@ export const data: VideoItemType[] = [
     videoImage: 'https://example.com/path/to/video1.jpg',
     videoViewNum: 1.5,
     videoDuration: 3600,
-    uploaderAvatar: 'https://example.com/path/to/avatar1.jpg',
+    uploaderAvatar:
+      'http://android-demo0.oss-cn-hangzhou.aliyuncs.com/2e00f1b210dda2bd9aa3fadeac7ef1f5.jpg?OSSAccessKeyId=LTAI5tD5kdnqnWeH7dtogvE5&Expires=1691584340&Signature=s3AT%2BAQg1cJOgG6UDwr22pjuVSM%3D',
     uploaderNickname: 'FoodLover123',
     commentNum: 800,
     isFollowed: true,
@@ -29,7 +30,8 @@ export const data: VideoItemType[] = [
     videoImage: 'https://example.com/path/to/video2.jpg',
     videoViewNum: 1.2,
     videoDuration: 180,
-    uploaderAvatar: 'https://example.com/path/to/avatar2.jpg',
+    uploaderAvatar:
+      'http://android-demo0.oss-cn-hangzhou.aliyuncs.com/2e00f1b210dda2bd9aa3fadeac7ef1f5.jpg?OSSAccessKeyId=LTAI5tD5kdnqnWeH7dtogvE5&Expires=1691584340&Signature=s3AT%2BAQg1cJOgG6UDwr22pjuVSM%3D',
     uploaderNickname: 'AdventureSeeker',
     commentNum: 500,
     isFollowed: false,
@@ -41,7 +43,8 @@ export const data: VideoItemType[] = [
     videoImage: 'https://example.com/path/to/video3.jpg',
     videoViewNum: 1.8,
     videoDuration: 300,
-    uploaderAvatar: 'https://example.com/path/to/avatar3.jpg',
+    uploaderAvatar:
+      'http://android-demo0.oss-cn-hangzhou.aliyuncs.com/2e00f1b210dda2bd9aa3fadeac7ef1f5.jpg?OSSAccessKeyId=LTAI5tD5kdnqnWeH7dtogvE5&Expires=1691584340&Signature=s3AT%2BAQg1cJOgG6UDwr22pjuVSM%3D',
     uploaderNickname: 'GuitarPro',
     commentNum: 1200,
     isFollowed: true,
@@ -53,7 +56,8 @@ export const data: VideoItemType[] = [
     videoImage: 'https://example.com/path/to/video4.jpg',
     videoViewNum: 1.1,
     videoDuration: 120,
-    uploaderAvatar: 'https://example.com/path/to/avatar4.jpg',
+    uploaderAvatar:
+      'http://android-demo0.oss-cn-hangzhou.aliyuncs.com/2e00f1b210dda2bd9aa3fadeac7ef1f5.jpg?OSSAccessKeyId=LTAI5tD5kdnqnWeH7dtogvE5&Expires=1691584340&Signature=s3AT%2BAQg1cJOgG6UDwr22pjuVSM%3D',
     uploaderNickname: 'BeautyGuru',
     commentNum: 300,
     isFollowed: false,
@@ -65,7 +69,8 @@ export const data: VideoItemType[] = [
     videoImage: 'https://example.com/path/to/video5.jpg',
     videoViewNum: 1.6,
     videoDuration: 150,
-    uploaderAvatar: 'https://example.com/path/to/avatar5.jpg',
+    uploaderAvatar:
+      'http://android-demo0.oss-cn-hangzhou.aliyuncs.com/2e00f1b210dda2bd9aa3fadeac7ef1f5.jpg?OSSAccessKeyId=LTAI5tD5kdnqnWeH7dtogvE5&Expires=1691584340&Signature=s3AT%2BAQg1cJOgG6UDwr22pjuVSM%3D',
     uploaderNickname: 'YogaLover',
     commentNum: 600,
     isFollowed: true,
