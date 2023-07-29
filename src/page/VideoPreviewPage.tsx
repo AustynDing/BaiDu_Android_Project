@@ -22,8 +22,8 @@ export function VideoPreviewPage() {
   return (
     <View style={styles.container}>
       {/* 搜索栏 */}
-      <View style={{height:65}}>
-      <ForwardSearchBar />
+      <View style={{ height: 65 }}>
+        <ForwardSearchBar />
       </View>
       {/* 视频列表 */}
       <FlatList

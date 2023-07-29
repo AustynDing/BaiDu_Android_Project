@@ -6,18 +6,20 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native'
 import * as ImagePicker from 'react-native-image-picker'
 import { HeaderTab } from '../components/HeaderTab'
-import { AdvancedNewsType } from '../components/News'
+import { AdvancedNewsType, NewsType } from '../components/News'
 import {
   NewsAddProvider,
   useNewsAddDispatch,
   useNewsAddFormData,
 } from '../components/News/NewsAddContext'
 import { NewsListProvider } from '../components/News/NewsListContext'
+import { usePageNavigation } from '../hooks/usePageNavigation'
 
 export function NewsAddPageContainer() {
   return (
@@ -31,6 +33,22 @@ export function NewsAddPageContainer() {
 
 export function NewsAddPage() {
   const dispatch = useNewsAddDispatch()
+  const { goBack } = usePageNavigation()
+  const formData = useNewsAddFormData()
+  const handleSubmit = () => {
+    for (let key of Object.keys(formData)) {
+      if (formData[key as keyof NewsType] === '') {
+        ToastAndroid.showWithGravity(
+          '请不要留下空白噢~',
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM,
+        )
+        return
+      }
+    }
+    dispatch({ type: 'SUBMIT' })
+    goBack()
+  }
   return (
     <View style={styles.container}>
       <HeaderTab>
@@ -68,10 +86,7 @@ export function NewsAddPage() {
         field="content"
       />
       <View style={styles.buttonContainer}>
-        <Button
-          onPress={() => dispatch({ type: 'SUBMIT' })}
-          title="添加新闻条目"
-        />
+        <Button onPress={handleSubmit} title="添加新闻条目" />
       </View>
     </View>
   )

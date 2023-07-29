@@ -20,8 +20,6 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaProvider>
-      {/* <DBProvider> */}
-      {/* <SQLiteDemo/> */}
       <NavigationContainer>
         <Stack.Navigator initialRouteName={screens.Home}>
           <Stack.Group>
@@ -41,7 +39,7 @@ function App(): JSX.Element {
             <Stack.Screen
               name={screens.NewsDetail}
               component={NewsDetailPage}
-              options={{ headerShown: false}}
+              options={{ headerShown: false }}
             />
             <Stack.Screen
               name={screens.NewsAdd}
@@ -68,7 +66,6 @@ function App(): JSX.Element {
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>
-      {/* </DBProvider> */}
     </SafeAreaProvider>
   );
 }

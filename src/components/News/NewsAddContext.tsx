@@ -1,6 +1,7 @@
 import React from 'react'
 import { addNewsItem } from '../../database/db-service-news'
 import { AdvancedNewsType, newsType } from './index'
+
 type NewsAddContextType = {
   formData: AdvancedNewsType
   dispatch: React.Dispatch<Action>
@@ -49,7 +50,7 @@ function newsReducer(state: AdvancedNewsType, action: Action) {
         })
         .catch(err => console.log(err))
       // 在这里可以调用API将数据提交到后端或进行其他处理
-      return state
+      return initialFormData
     case 'CLEAN':
       return initialFormData
     default:
