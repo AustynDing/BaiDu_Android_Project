@@ -1,6 +1,6 @@
 import { Icon } from '@rneui/themed'
 import React from 'react'
-import { StyleProp, View, ViewStyle } from 'react-native'
+import { StyleProp, View, ViewStyle, StyleSheet } from 'react-native'
 import { usePageNavigation } from '../hooks/usePageNavigation'
 
 export function HeaderTab(props: {
@@ -12,23 +12,9 @@ export function HeaderTab(props: {
   const { children, arrowColor = '#333333', onPress, style } = props
   const { goBack } = usePageNavigation()
   return (
-    <View
-      style={[
-        {
-          flexDirection: 'row',
-          height: 65,
-          width: '100%',
-          alignItems: 'center',
-          zIndex: 99,
-        },
-        style,
-      ]}
-    >
+    <View style={[styles.container, style]}>
       <Icon
-        style={{
-          width: 30,
-          height: 30,
-        }}
+        style={styles.icon}
         name="angle-left"
         type="font-awesome"
         color={arrowColor}
@@ -39,3 +25,17 @@ export function HeaderTab(props: {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    height: 65,
+    width: '100%',
+    alignItems: 'center',
+    zIndex: 99,
+  },
+  icon: {
+    width: 30,
+    height: 30,
+  },
+})

@@ -34,9 +34,7 @@ export function NewsAddPage() {
   return (
     <View style={styles.container}>
       <HeaderTab>
-        <Text style={{ fontSize: 20, color: '#000', marginLeft: 10 }}>
-          添加新闻条目
-        </Text>
+        <Text style={styles.headerText}>添加新闻条目</Text>
       </HeaderTab>
       <ItemContainer
         title="标题"
@@ -51,12 +49,7 @@ export function NewsAddPage() {
         placeholder="请输入新闻媒体"
         field="medium"
       />
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}
-      >
+      <View style={styles.itemContainer}>
         <UploadPhotoContainer title="略缩图" />
         {/* <UploadPhotoContainer title="头图" /> */}
         {/* UI图中给的头图的需求不明确，作用不大，所以删除了 */}
@@ -74,13 +67,7 @@ export function NewsAddPage() {
         numberOfLines={25}
         field="content"
       />
-      <View
-        style={{
-          justifyContent: 'flex-end',
-          flexDirection: 'row',
-          marginRight: 5,
-        }}
-      >
+      <View style={styles.buttonContainer}>
         <Button
           onPress={() => dispatch({ type: 'SUBMIT' })}
           title="添加新闻条目"
@@ -133,71 +120,39 @@ function UploadPhotoContainer(props: { title: string }) {
     [],
   )
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        margin: 10,
-      }}
-    >
-      <View
-        style={{
-          width: 150,
-          flexDirection: 'row',
-        }}
-      >
-        <Text
-          style={{
-            marginTop: 5,
-            fontSize: 16,
-            flex: 1,
-          }}
-        >
-          {title}
-        </Text>
-        {response ? (
-          response.assets &&
-          response.assets.map(({ uri }: { uri: string }) => (
-            <View key={uri} style={styles.imageContainer}>
-              <View>
-                <Image
-                  resizeMode="cover"
-                  resizeMethod="scale"
-                  style={{
-                    width: 100,
-                    height: 100,
-                    borderRadius: 20,
-                  }}
-                  source={{ uri: uri }}
-                />
-              </View>
-              <TouchableOpacity onPress={deletePhoto} style={{ marginTop: 5 }}>
-                <Text>删除照片</Text>
-              </TouchableOpacity>
+    <View style={styles.uploadPhotoContainer}>
+      <Text style={styles.itemTitle}>{title}</Text>
+      {response ? (
+        response.assets &&
+        response.assets.map(({ uri }: { uri: string }) => (
+          <View key={uri} style={styles.imageContainer}>
+            <View>
+              <Image
+                resizeMode="cover"
+                resizeMethod="scale"
+                style={styles.image}
+                source={{ uri: uri }}
+              />
             </View>
-          ))
-        ) : (
-          <TouchableOpacity
-            style={{
-              width: 100,
-              height: 100,
-              backgroundColor: '#D8D8D8',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 20,
-            }}
-            onPress={() =>
-              uploadPhoto('library', {
-                mediaType: 'photo',
-                quality: 0.5,
-                selectionLimit: 1, // 默认也只能上传一张照片
-              })
-            }
-          >
-            <Icon name="upload" size={60} color="#9B9696" />
-          </TouchableOpacity>
-        )}
-      </View>
+            <TouchableOpacity onPress={deletePhoto} style={{ marginTop: 5 }}>
+              <Text>删除照片</Text>
+            </TouchableOpacity>
+          </View>
+        ))
+      ) : (
+        <TouchableOpacity
+          style={styles.uploadPhotoIconContainer}
+          onPress={() =>
+            uploadPhoto('library', {
+              mediaType: 'photo',
+              quality: 0.5,
+              selectionLimit: 1, // 默认也只能上传一张照片
+            })
+          }
+        >
+          <Icon name="upload" size={60} color="#9B9696" />
+        </TouchableOpacity>
+      )}
     </View>
   )
 }
@@ -213,25 +168,8 @@ function ItemContainer(props: {
   const dispatch = useNewsAddDispatch()
   const value = useNewsAddFormData()[field]
   return (
-    <View
-      style={[
-        {
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          margin: 10,
-          height: height,
-        },
-      ]}
-    >
-      <Text
-        style={{
-          marginTop: 5,
-          fontSize: 16,
-          flex: 1,
-        }}
-      >
-        {title}
-      </Text>
+    <View style={[styles.itemContainer, { height: height }]}>
+      <Text style={styles.itemTitle}>{title}</Text>
       <TextInput
         multiline={numberOfLines === 1 ? false : true}
         scrollEnabled={true}
@@ -241,33 +179,62 @@ function ItemContainer(props: {
         onChangeText={val =>
           dispatch({ type: 'UPDATE_FIELD', field, value: val })
         }
-        style={{
-          borderStyle: 'solid',
-          borderColor: '#888686',
-          borderWidth: 1,
-          borderRadius: 20,
-          flex: 3,
-        }}
+        style={styles.itemTextInput}
       />
     </View>
   )
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   buttonContainer: {
+    justifyContent: 'flex-end',
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginVertical: 8,
+    marginRight: 5,
   },
   imageContainer: {
     alignItems: 'center',
     justifyContent: 'center',
   },
   image: {
+    width: 100,
+    height: 100,
+    borderRadius: 20,
+  },
+  headerText: {
+    fontSize: 20,
+    color: '#000',
+    marginLeft: 10,
+  },
+  uploadPhotoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     width: 200,
-    height: 200,
+  },
+  uploadPhotoIconContainer: {
+    width: 100,
+    height: 100,
+    backgroundColor: '#D8D8D8',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 10,
+  },
+  itemTitle: {
+    marginTop: 5,
+    fontSize: 16,
+    flex: 1,
+  },
+  itemTextInput: {
+    borderStyle: 'solid',
+    borderColor: '#888686',
+    borderWidth: 1,
+    borderRadius: 20,
+    flex: 3,
   },
 })

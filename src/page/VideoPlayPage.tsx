@@ -64,9 +64,9 @@ export function VideoPlayPage({ navigation }: { navigation: any }) {
         offset: screenHeight * index,
         index,
       })}
-    // length（长度）：表示每个列表项的长度（高度）
-    // offset（偏移量）：表示每个列表项的起始位置相对于列表的起始位置的偏移量
-    // 预先知道每个列表项布局信息的方法，从而优化滚动性能，使得列表在滚动时更加平滑
+      // length（长度）：表示每个列表项的长度（高度）
+      // offset（偏移量）：表示每个列表项的起始位置相对于列表的起始位置的偏移量
+      // 预先知道每个列表项布局信息的方法，从而优化滚动性能，使得列表在滚动时更加平滑
     />
   )
 }
@@ -105,7 +105,7 @@ export function VideoPlayItem(
         onLoadStart={() => toggleDialog(true)}
         onLoad={() => toggleDialog(false)}
         onError={error => console.log('视频加载出错', error)}
-      // onProgress={(data) => console.log('当前播放进度')}
+        // onProgress={(data) => console.log('当前播放进度')}
       />
       {paused ? <StopIcon /> : null}
       <LinearGradient // 实现蒙层效果
@@ -190,7 +190,7 @@ function RightBar({
   uploaderAvatar,
 }: Pick<VideoItemType, 'commentNum' | 'star' | 'uploaderAvatar'>) {
   const [isStared, toggleStared] = React.useState(false)
-  const [starNum,setStarNum] = React.useState(star)
+  const [starNum, setStarNum] = React.useState(star)
   return (
     <View
       style={{
@@ -214,8 +214,8 @@ function RightBar({
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => {
-          if(isStared) setStarNum(prev => prev - 1)
-          if(!isStared) setStarNum(prev => prev + 1)
+          if (isStared) setStarNum(prev => prev - 1)
+          if (!isStared) setStarNum(prev => prev + 1)
           toggleStared(!isStared)
         }}
       >

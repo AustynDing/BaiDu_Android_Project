@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity } from 'react-native'
 import { NormalNewsType } from '.'
 
 export function NormalNewsItem(props: NormalNewsType) {
-  const { title, medium, top = false, newsUrl } = props
+  const { title, medium, top = false } = props
   return (
     <TouchableOpacity
       activeOpacity={1}

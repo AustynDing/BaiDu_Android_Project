@@ -5,6 +5,7 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   LayoutChangeEvent,
+  StyleSheet,
 } from 'react-native'
 import { HeaderTab } from '../components/HeaderTab'
 import { Avatar } from '@rneui/themed'
@@ -32,10 +33,11 @@ export function NewsDetailPage() {
   const [show, setShow] = React.useState(false)
   const [scrollViewY, setScrollViewY] = React.useState(0) // 滚动容器的顶端距离屏幕的距离
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    // 当滚动发生时，判断AuthorBar是否可见
     targetRef.current?.measure((x, y, width, height, pageX, pageY) => {
       // pageY:距离屏幕顶部的y轴距离（因此可以为负数） height：组件自身的高度
       const viewBottom = pageY + height // 组件底部距离屏幕的垂直距离
-      // Check if the view's bottom is within the container's visible area
+      // 检查AuthorBar的底部是否在ScrollView的可见区域内
       if (viewBottom <= scrollViewY) {
         // 在滚动容器之外 -- 不可见
         setShow(true)
@@ -49,31 +51,20 @@ export function NewsDetailPage() {
   }, [])
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <HeaderTab>{show && <AuthorBar />}</HeaderTab>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ marginHorizontal: 10 }}
+        style={styles.scrollView}
         onScroll={handleScroll}
         onLayout={handleLayout}
       >
-        <Text
-          style={{
-            fontSize: 32,
-            fontWeight: 'bold',
-          }}
-        >
-          {data.title}
-        </Text>
+        <Text style={styles.title}>{data.title}</Text>
         <AuthorBar ref={targetRef} />
-        <View
-          style={{
-            marginBottom: 10,
-          }}
-        >
-          <Text style={{ fontSize: 18 }}>{data.content}</Text>
+        <View style={styles.contentContainer}>
+          <Text style={styles.contentText}>{data.content}</Text>
           <Image
-            style={{ width: '100%', aspectRatio: 16 / 9 }}
+            style={styles.image}
             source={require('../asset/weather_windy_bg.jpg')}
             resizeMode="cover"
           />
@@ -87,20 +78,55 @@ const AuthorBar = React.forwardRef<View, any>((props, ref) => {
   return (
     <View
       ref={ref}
-      style={{
-        width: '100%',
-        flexDirection: 'row',
-        marginVertical: 10,
-      }}
+      style={styles.authorBarContainer}
       onLayout={() => {}} // 必须要有定义，measure中的参数才会有值
     >
       <Avatar source={require('../asset/avatar.jpg')} rounded size={40} />
-      <View style={{ marginHorizontal: 10 }}>
-        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{data.medium}</Text>
-        <Text style={{ color: '#999999', fontSize: 14 }}>
+      <View style={styles.authorInfoContainer}>
+        <Text style={styles.authorName}>{data.medium}</Text>
+        <Text style={styles.authorDetails}>
           {data.type} {data.followed} 关注
         </Text>
       </View>
     </View>
   )
+})
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollView: {
+    marginHorizontal: 10,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+  },
+  authorBarContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    marginVertical: 10,
+  },
+  authorInfoContainer: {
+    marginHorizontal: 10,
+  },
+  authorName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  authorDetails: {
+    color: '#999999',
+    fontSize: 14,
+  },
+  contentContainer: {
+    marginBottom: 10,
+  },
+  contentText: {
+    fontSize: 18,
+  },
+  image: {
+    width: '100%',
+    aspectRatio: 16 / 9,
+  },
 })

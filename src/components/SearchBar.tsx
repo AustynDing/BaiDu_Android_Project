@@ -5,6 +5,7 @@ import {
   TextInput,
   TextInputSubmitEditingEventData,
   View,
+  StyleSheet,
 } from 'react-native'
 import { usePageNavigation } from '../hooks/usePageNavigation'
 import { useScreens } from '../hooks/useScreens'
@@ -16,7 +17,7 @@ export interface SearchBarRef {
 interface SearchBarProps {
   onSubmitEditing?: (text: string) => void
 }
-// 实现搜索框中搜索记录随着页面的切换而切换
+
 export const ForwardSearchBar = React.forwardRef<SearchBarRef, SearchBarProps>(
   function SearchBar(props, ref) {
     const [searchText, setSearchText] = React.useState('')
@@ -71,23 +72,14 @@ export const ForwardSearchBar = React.forwardRef<SearchBarRef, SearchBarProps>(
       pushStack(submittedText)
     }
     return (
-      <View
-        style={{
-          backgroundColor: '#F2F2F2',
-          height: 65,
-          paddingHorizontal: 20,
-          paddingVertical: 10,
-          width: '100%',
-        }}
-      >
+      <View style={styles.container}>
         <TextInput
-          style={{
-            flex: 1,
-            borderColor: isFocused ? 'black' : 'gray',
-            borderWidth: 1,
-            borderStyle: 'solid',
-            borderRadius: 15,
-          }}
+          style={[
+            styles.textInput,
+            {
+              borderColor: isFocused ? 'black' : 'gray',
+            },
+          ]}
           placeholder="搜索或输入网址"
           value={searchText}
           onChangeText={setSearchText}
@@ -104,3 +96,18 @@ export const ForwardSearchBar = React.forwardRef<SearchBarRef, SearchBarProps>(
 ForwardSearchBar.displayName = 'SearchBar'
 // 在开发者工具中查看组件层次结构时，会显示 SearchBar 而不是默认的匿名组件名称，
 // 这有助于更好地理解和调试的应用程序
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#F2F2F2',
+    height: 65,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    width: '100%',
+  },
+  textInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderRadius: 15,
+  },
+})

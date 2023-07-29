@@ -29,33 +29,18 @@ export const HomePage = () => {
 
 function LogoContainer() {
   return (
-    <View
-      style={{
-        height: 100,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 42,
-          fontWeight: 'bold',
-        }}
-      >
-        LOGO
-      </Text>
+    <View style={styles.logoContainer}>
+      <Text style={styles.logoText}>LOGO</Text>
     </View>
   )
 }
 
-export function HomeScreen({ navigation }: { navigation: any }) {
+export function HomeScreen() {
   const scrollY = React.useRef(new Animated.Value(0)).current
   const { StickyHeader } = useStickyHeader()
   return (
     <Animated.ScrollView
-      style={{
-        flex: 1,
-      }}
+      style={styles.scrollView}
       onScroll={Animated.event(
         [
           {
@@ -66,17 +51,9 @@ export function HomeScreen({ navigation }: { navigation: any }) {
       )}
       scrollEventThrottle={1} // 调整滚动事件的触发频率
     >
-      <View
-        style={{
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginTop: 20,
-        }}
-      >
-        <WeatherForcast navigation={navigation} />
-        <AddNewsIcon navigation={navigation} />
+      <View style={styles.weatherAndAddNewsContainer}>
+        <WeatherForcast />
+        <AddNewsIcon />
       </View>
       <StickyHeader stickyScrollY={scrollY}>
         <ForwardSearchBar />
@@ -91,18 +68,10 @@ export function HomeScreen({ navigation }: { navigation: any }) {
   )
 }
 
-function AddNewsIcon({ navigation }: { navigation: any }) {
+function AddNewsIcon() {
   const { goToNewsAddPage } = usePageNavigation()
   return (
-    <View
-      style={{
-        width: 50,
-        height: 50,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
+    <View style={styles.addNewsIconContainer}>
       <Icon
         onPress={goToNewsAddPage}
         size={25}
@@ -114,85 +83,84 @@ function AddNewsIcon({ navigation }: { navigation: any }) {
   )
 }
 
-function WeatherForcast({ navigation }: { navigation: any }) {
+function WeatherForcast() {
   const { position, temperature, AQI, nowWeather } = weatherData
   const { goToWeatherPage } = usePageNavigation()
   return (
-    <>
-      <TouchableHighlight
-        activeOpacity={0.6}
-        underlayColor="#DDDDDD"
-        onPress={goToWeatherPage}
-      >
-        <View
-          style={{
-            borderStyle: 'dashed',
-            borderColor: '#999999',
-            borderWidth: 1,
-            width: 150,
-            height: 50,
-            flexDirection: 'row',
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <Text
-              style={{
-                fontWeight: '500',
-                fontSize: 32,
-              }}
-            >
-              {temperature}°
-            </Text>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'column',
-            }}
-          >
-            <View
-              style={{
-                flex: 1,
-              }}
-            >
-              <Text>
-                {position} {weatherToDescriptionMap(nowWeather)}
-              </Text>
-            </View>
-            <View
-              style={{
-                flex: 1,
-              }}
-            >
-              <Text>
-                {AQI} {mapAQIToPollutionLevel(AQI)}
-              </Text>
-            </View>
-          </View>
+    <TouchableHighlight
+      activeOpacity={0.6}
+      underlayColor="#DDDDDD"
+      onPress={goToWeatherPage}
+    >
+      <View style={styles.weatherContainer}>
+        <View style={styles.temperatureContainer}>
+          <Text style={styles.temperatureText}>{temperature}°</Text>
         </View>
-      </TouchableHighlight>
-    </>
+        <View style={styles.weatherDescriptionContainer}>
+          <Text style={styles.weatherDescriptionText}>
+            {position} {weatherToDescriptionMap(nowWeather)}
+          </Text>
+          <Text style={styles.AQIText}>
+            {AQI} {mapAQIToPollutionLevel(AQI)}
+          </Text>
+        </View>
+      </View>
+    </TouchableHighlight>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   scrollView: {
     flex: 1,
   },
-  header: {
-    transform: [{ translateY: 200 }],
-    backgroundColor: 'yellow',
-    zIndex: 100,
-    position: 'absolute',
-    // 其他样式属性
+  weatherAndAddNewsContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  logoContainer: {
+    height: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoText: {
+    fontSize: 42,
+    fontWeight: 'bold',
+  },
+  addNewsIconContainer: {
+    width: 50,
+    height: 50,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  weatherContainer: {
+    borderStyle: 'dashed',
+    borderColor: '#999999',
+    borderWidth: 1,
+    width: 150,
+    height: 50,
+    flexDirection: 'row',
+  },
+  temperatureContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  temperatureText: {
+    fontWeight: '500',
+    fontSize: 32,
+  },
+  weatherDescriptionContainer: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  weatherDescriptionText: {
+    flex: 1,
+  },
+  AQIText: {
+    flex: 1,
   },
 })
