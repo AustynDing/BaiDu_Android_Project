@@ -98,11 +98,11 @@ ForwardSearchBar.displayName = 'SearchBar'
 // 这有助于更好地理解和调试的应用程序
 const styles = StyleSheet.create({
   container: {
+    flex:1,
     backgroundColor: '#F2F2F2',
     height: 65,
-    paddingHorizontal: 20,
+    paddingHorizontal:20,
     paddingVertical: 10,
-    width: '100%',
   },
   textInput: {
     flex: 1,
