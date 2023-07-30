@@ -5,40 +5,28 @@ import { initNewsData } from './data'
 
 interface NewsListContextType {
   newsList: NewsType[]
-  addNewsInList: (news: NewsType) => void
+  addNewsInList: (news: NewsType[]) => void
   fetchNewsList: () => Promise<void>
 }
 
 export const NewsListContext = React.createContext<NewsListContextType>({
   newsList: initNewsData,
-  addNewsInList: (news: NewsType) => {},
+  addNewsInList: (news: NewsType[]) => {},
   fetchNewsList: () => Promise.resolve(),
 })
 
 export function NewsListProvider({ children }: { children: any }) {
   const [newsList, addNewsList] = React.useState<NewsType[]>(initNewsData)
   const addNewsInList = React.useCallback(
-    (news: NewsType) => {
-      addNewsList(prev => [...prev, news])
+    (news: NewsType[]) => {
+      addNewsList([...initNewsData,...news])
     },
     [addNewsList],
   )
   const fetchNewsList = React.useCallback(async () => {
     try {
       const results = await getNewsItems()
-      if (results.length) {
-        results
-          .filter(result => {
-            return !newsList.some(news => news.id === result.id)
-          })
-          .forEach(value => {
-            addNewsInList(value)
-            // bug newsList的更新是异步的，导致多次调用的addNewsInList
-            // 使用的都是相同的旧newsList值，因此可能会导致更新不及时或者覆盖的问题
-            // --- tab页的缓存导致newList和渲染出的无法一致，newList中的数据落后于已经渲染的从数据库中加载的数据
-            // 因此无法实现filter
-          })
-      }
+      addNewsInList(results)
     } catch (error) {
       console.error(error)
     }
