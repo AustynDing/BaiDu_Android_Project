@@ -19,17 +19,17 @@ const client = new OSS({
 // 获取文件后缀名
 function getFileExtension(filePath) {
   // 获取最后一个点号的位置
-  const lastDotIndex = filePath.lastIndexOf('.');
+  const lastDotIndex = filePath.lastIndexOf('.')
 
   // 如果找不到点号或者点号在文件名的起始位置，则返回空字符串表示没有后缀
   if (lastDotIndex === -1 || lastDotIndex === 0) {
-    return '';
+    return ''
   }
 
   // 截取点号后面的部分即为文件后缀
-  const fileExtension = filePath.substring(lastDotIndex);
+  const fileExtension = filePath.substring(lastDotIndex)
 
-  return fileExtension;
+  return fileExtension
 }
 // 生成随机字符串-32位
 function generateRandomString() {
@@ -37,24 +37,23 @@ function generateRandomString() {
 }
 
 function normalizePath(filePath) {
-  const isAbsolute = filePath.startsWith('/');
-  const parts = filePath.split('/');
+  const isAbsolute = filePath.startsWith('/')
+  const parts = filePath.split('/')
 
-  const normalizedParts = [];
+  const normalizedParts = []
   for (const part of parts) {
     if (part === '..') {
-      normalizedParts.pop();
+      normalizedParts.pop()
     } else if (part !== '.' && part !== '') {
-      normalizedParts.push(part);
+      normalizedParts.push(part)
     }
   }
 
-  const normalizedPath = normalizedParts.join('/');
+  const normalizedPath = normalizedParts.join('/')
 
   // Handle absolute paths by adding a leading '/'
-  return isAbsolute ? `/${normalizedPath}` : normalizedPath;
+  return isAbsolute ? `/${normalizedPath}` : normalizedPath
 }
-
 
 export async function uploadImage(
   localFilePath = 'D:\\Android_Learn\\AwesomeProject\\src\\asset\\avatar.jpg',
@@ -71,7 +70,7 @@ export async function uploadImage(
       normalizePath(localFilePath),
     )
     const url = await generateSignedUrl(result.name, 3600 * 24 * 14)
-    console.log(url,'testOk')
+    console.log(url, 'testOk')
     return url
   } catch (e) {
     console.log(e)

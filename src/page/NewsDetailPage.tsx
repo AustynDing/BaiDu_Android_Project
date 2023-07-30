@@ -105,7 +105,11 @@ export function NewsDetailPage({ route }: { route: any }) {
           <Text style={styles.contentText}>{data?.content}</Text>
           <Image
             style={styles.image}
-            source={data?.imageUrl ? { uri: data?.imageUrl } : require('../asset/weather_windy_bg.jpg')}
+            source={
+              data?.imageUrl
+                ? { uri: data?.imageUrl }
+                : require('../asset/weather_windy_bg.jpg')
+            }
             resizeMode="cover"
           />
         </View>

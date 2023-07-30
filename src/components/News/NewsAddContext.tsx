@@ -26,12 +26,11 @@ const NewsAddContext = React.createContext<NewsAddContextType>({
   },
 })
 // 定义Action类型
-type Action =
-  | {
-      type: 'UPDATE_FIELD'
-      field: keyof AdvancedNewsType
-      value: string | boolean | newsType
-    }
+type Action = {
+  type: 'UPDATE_FIELD'
+  field: keyof AdvancedNewsType
+  value: string | boolean | newsType
+}
 
 function newsReducer(state: AdvancedNewsType, action: Action) {
   switch (action.type) {

@@ -47,9 +47,9 @@ export function NewsAddPage() {
       }
     }
     addNewsItem(formData)
-    .then(() => goBack()) // 不放在reducer中是避免hook的嵌套使用
-    .catch((err) => console.log(err))
-  },[formData]) // 需要添加formData的依赖，否则formData永远都是初始状态--闭包
+      .then(() => goBack()) // 不放在reducer中是避免hook的嵌套使用
+      .catch(err => console.log(err))
+  }, [formData]) // 需要添加formData的依赖，否则formData永远都是初始状态--闭包
   return (
     <View style={styles.container}>
       <HeaderTab>

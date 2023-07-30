@@ -19,7 +19,7 @@ export function NewsListProvider({ children }: { children: any }) {
   const [newsList, addNewsList] = React.useState<NewsType[]>(initNewsData)
   const addNewsInList = React.useCallback(
     (news: NewsType[]) => {
-      addNewsList([...initNewsData,...news])
+      addNewsList([...initNewsData, ...news])
     },
     [addNewsList],
   )
