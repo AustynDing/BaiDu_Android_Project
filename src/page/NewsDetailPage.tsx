@@ -86,15 +86,21 @@ export function NewsDetailPage({ route }: { route: any }) {
           commentNum={data?.commentNum}
         />
         <View style={styles.contentContainer}>
-          <View style={{
-            backgroundColor:'#F4FBF9',
-            flex:1,
-            borderRadius:20,
-            padding:10,
-            marginVertical:10,
-          }}>
-          <Text style={{color:'#2B6E62',fontSize:20,fontWeight:'bold',}}>摘要</Text>
-          <Text style={styles.contentText}>{data?.abstract}</Text>
+          <View
+            style={{
+              backgroundColor: '#F4FBF9',
+              flex: 1,
+              borderRadius: 20,
+              padding: 10,
+              marginVertical: 10,
+            }}
+          >
+            <Text
+              style={{ color: '#2B6E62', fontSize: 20, fontWeight: 'bold' }}
+            >
+              摘要
+            </Text>
+            <Text style={styles.contentText}>{data?.abstract}</Text>
           </View>
           <Text style={styles.contentText}>{data?.content}</Text>
           <Image

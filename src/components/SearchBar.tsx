@@ -2,10 +2,10 @@ import { useRoute } from '@react-navigation/native'
 import React from 'react'
 import {
   NativeSyntheticEvent,
+  StyleSheet,
   TextInput,
   TextInputSubmitEditingEventData,
   View,
-  StyleSheet,
 } from 'react-native'
 import { usePageNavigation } from '../hooks/usePageNavigation'
 import { useScreens } from '../hooks/useScreens'

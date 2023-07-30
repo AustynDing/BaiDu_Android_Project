@@ -1,4 +1,4 @@
-import { Image, Text, View, TouchableOpacity } from 'react-native'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { AdvancedNewsType } from '.'
 import { usePageNavigation } from '../../hooks/usePageNavigation'
 export function AdvancedNewsItem(props: AdvancedNewsType) {

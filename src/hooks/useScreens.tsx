@@ -8,5 +8,5 @@ const SCREENS = {
   Profile: 'ProfileScreen',
   NewsDetail: 'NewsDetail',
   // 添加其他屏幕的名称...
-}
+} as const
 export const useScreens = () => SCREENS

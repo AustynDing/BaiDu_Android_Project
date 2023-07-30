@@ -1,10 +1,6 @@
-import {
-  enablePromise,
-  openDatabase,
-  SQLiteDatabase,
-} from 'react-native-sqlite-storage'
-import { TABLE_NAME, getDBConnection } from './db-service'
+import { enablePromise } from 'react-native-sqlite-storage'
 import { UserType } from '../components/User/data'
+import { getDBConnection, TABLE_NAME } from './db-service'
 
 enablePromise(true)
 

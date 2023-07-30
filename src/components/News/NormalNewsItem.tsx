@@ -1,5 +1,5 @@
 import { Icon } from '@rneui/themed'
-import { Text, View, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import { NormalNewsType } from '.'
 
 export function NormalNewsItem(props: NormalNewsType) {

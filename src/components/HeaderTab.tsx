@@ -1,6 +1,6 @@
 import { Icon } from '@rneui/themed'
 import React from 'react'
-import { StyleProp, View, ViewStyle, StyleSheet } from 'react-native'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { usePageNavigation } from '../hooks/usePageNavigation'
 
 export function HeaderTab(props: {

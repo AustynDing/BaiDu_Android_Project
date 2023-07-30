@@ -1,11 +1,11 @@
 import React from 'react'
-import { UserType, initUserData } from './data'
 import {
   getUserInfo,
   insertUserInfo,
   updateAvatarUrl,
   updateNickname,
 } from '../../database/db-service-user'
+import { UserType, initUserData } from './data'
 type UserInfoContextType = {
   initData: UserType
   dispatch: React.Dispatch<Action>
