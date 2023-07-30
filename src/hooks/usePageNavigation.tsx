@@ -20,8 +20,10 @@ export const usePageNavigation = () => {
     goToHomePage() {
       navigation.navigate(screens.Home)
     },
-    goToNewsDetailPage() {
-      navigation.push(screens.NewsDetail)
+    goToNewsDetailPage(id: any) {
+      navigation.push(screens.NewsDetail, {
+        id,
+      })
     },
     goBack() {
       navigation.goBack()

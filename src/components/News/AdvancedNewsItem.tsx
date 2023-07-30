@@ -2,7 +2,7 @@ import { Image, Text, View, TouchableOpacity } from 'react-native'
 import { AdvancedNewsType } from '.'
 import { usePageNavigation } from '../../hooks/usePageNavigation'
 export function AdvancedNewsItem(props: AdvancedNewsType) {
-  const { hotSpot, title, imageUrl, commentNum: commnetNum, medium } = props
+  const { hotSpot, title, imageUrl, commentNum: commnetNum, medium, id } = props
   const { goToNewsDetailPage } = usePageNavigation()
   return (
     <TouchableOpacity
@@ -16,7 +16,7 @@ export function AdvancedNewsItem(props: AdvancedNewsType) {
         borderStyle: 'solid',
         borderTopColor: 'black',
       }}
-      onPress={goToNewsDetailPage}
+      onPress={() => goToNewsDetailPage(id)}
     >
       <View
         style={{

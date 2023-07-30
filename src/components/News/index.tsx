@@ -7,11 +7,11 @@ export type NormalNewsType = {
   type: newsType // 新闻类型
   abstract: string // 摘要
   content: string // 内容
+  commentNum?: number // 评论数-设置1-1000的随机默认值，因为没有实现评论的需求
 }
 export type AdvancedNewsType = {
   hotSpot: boolean // 是否是热点
   imageUrl: string // 略缩图url
-  commentNum?: number // 评论数-设置1-1000的随机默认值，因为没有实现评论的需求
 } & NormalNewsType
 
 export type NewsType = NormalNewsType | AdvancedNewsType

@@ -50,6 +50,31 @@ export const getNewsItems = async (): Promise<AdvancedNewsType[]> => {
   }
 }
 
+export const getNewsItem = async (id: number) => {
+  try {
+    const db = await getDBConnection()
+    await createNewsTable()
+    const results = await db.executeSql(
+      `SELECT rowid as id,title,medium,type,top,abstract,content,hotSpot,imageUrl,commentNum FROM ${TABLE_NAME.NEWS_TABLE} 
+       WHERE rowid = ?
+      `,
+      [id],
+    )
+    // Check if any rows were returned
+    if (results[0].rows.length > 0) {
+      const newsItem = results[0].rows.item(0)
+      return newsItem
+    } else {
+      // If no rows are found with the given id, return null or throw an error
+      // depending on your use case
+      throw new Error('没有找到新闻')
+    }
+  } catch (error) {
+    console.error('加载新闻失败', error)
+    return null
+  }
+}
+
 export const addNewsItem = async (item: AdvancedNewsType) => {
   try {
     // 确保新闻表已经存在，如果不存在则创建
