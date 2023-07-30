@@ -32,27 +32,11 @@ type Action =
       field: keyof AdvancedNewsType
       value: string | boolean | newsType
     }
-  | { type: 'SUBMIT' }
-  | { type: 'CLEAN' }
 
 function newsReducer(state: AdvancedNewsType, action: Action) {
   switch (action.type) {
     case 'UPDATE_FIELD':
       return { ...state, [action.field]: action.value }
-    case 'SUBMIT':
-      // 在这里执行提交逻辑
-      const addNews = async (news: AdvancedNewsType) => {
-        return await addNewsItem(news)
-      }
-      addNews(state)
-        .then(id => {
-          // console.log(id,id[0].rows.item)
-        })
-        .catch(err => console.log(err))
-      // 在这里可以调用API将数据提交到后端或进行其他处理
-      return initialFormData
-    case 'CLEAN':
-      return initialFormData
     default:
       return state
   }

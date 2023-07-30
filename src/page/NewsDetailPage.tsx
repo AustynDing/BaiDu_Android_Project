@@ -105,7 +105,7 @@ export function NewsDetailPage({ route }: { route: any }) {
           <Text style={styles.contentText}>{data?.content}</Text>
           <Image
             style={styles.image}
-            source={{ uri: data?.imageUrl }}
+            source={data?.imageUrl ? { uri: data?.imageUrl } : require('../asset/weather_windy_bg.jpg')}
             resizeMode="cover"
           />
         </View>
@@ -126,7 +126,7 @@ const AuthorBar = React.forwardRef<View, any>(
         <Avatar source={require('../asset/avatar.jpg')} rounded size={40} />
         <View style={styles.authorInfoContainer}>
           <Text style={styles.authorName}>{medium}</Text>
-          <Text style={styles.authorDetails}>'百家号' {commentNum} 关注</Text>
+          <Text style={styles.authorDetails}>百家号{commentNum} 关注</Text>
         </View>
       </View>
     )

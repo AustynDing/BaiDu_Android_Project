@@ -20,6 +20,7 @@ import {
 } from '../components/News/NewsAddContext'
 import { NewsListProvider } from '../components/News/NewsListContext'
 import { usePageNavigation } from '../hooks/usePageNavigation'
+import { addNewsItem } from '../database/db-service-news'
 
 export function NewsAddPageContainer() {
   return (
@@ -32,10 +33,9 @@ export function NewsAddPageContainer() {
 }
 
 export function NewsAddPage() {
-  const dispatch = useNewsAddDispatch()
   const { goBack } = usePageNavigation()
   const formData = useNewsAddFormData()
-  const handleSubmit = () => {
+  const handleSubmit = React.useCallback(() => {
     for (let key of Object.keys(formData)) {
       if (formData[key as keyof NewsType] === '') {
         ToastAndroid.showWithGravity(
@@ -46,9 +46,10 @@ export function NewsAddPage() {
         return
       }
     }
-    dispatch({ type: 'SUBMIT' })
-    goBack()
-  }
+    addNewsItem(formData)
+    .then(() => goBack()) // 不放在reducer中是避免hook的嵌套使用
+    .catch((err) => console.log(err))
+  },[formData]) // 需要添加formData的依赖，否则formData永远都是初始状态--闭包
   return (
     <View style={styles.container}>
       <HeaderTab>
