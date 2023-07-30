@@ -1,10 +1,9 @@
-const OSS = require('ali-oss')
-const path = require('path')
-const crypto = require('crypto')
+import OSS from 'ali-oss'
+import { v4 as uuidv4 } from 'uuid'
 const OSS_CONFIG = {
   region: 'oss-cn-hangzhou',
-  accessKeyId: 'LTAI5tD5kdnqnWeH7dtogvE5',
-  accessKeySecret: 'beIU5Zmb02yGcPFbLGLtw2Cxav3ehY',
+  accessKeyId: 'XXXXXXXXXXXXXX',
+  accessKeySecret: 'XXXXXXXXXXXXXXXXXXXXXXX',
   bucket: 'android-demo0',
 }
 
@@ -19,32 +18,60 @@ const client = new OSS({
 
 // 获取文件后缀名
 function getFileExtension(filePath) {
-  return path.extname(filePath)
+  // 获取最后一个点号的位置
+  const lastDotIndex = filePath.lastIndexOf('.');
+
+  // 如果找不到点号或者点号在文件名的起始位置，则返回空字符串表示没有后缀
+  if (lastDotIndex === -1 || lastDotIndex === 0) {
+    return '';
+  }
+
+  // 截取点号后面的部分即为文件后缀
+  const fileExtension = filePath.substring(lastDotIndex);
+
+  return fileExtension;
+}
+// 生成随机字符串-32位
+function generateRandomString() {
+  return uuidv4()
 }
 
-// 生成随机字符串
-function generateRandomString(length) {
-  return crypto
-    .randomBytes(Math.ceil(length / 2))
-    .toString('hex')
-    .slice(0, length)
+function normalizePath(filePath) {
+  const isAbsolute = filePath.startsWith('/');
+  const parts = filePath.split('/');
+
+  const normalizedParts = [];
+  for (const part of parts) {
+    if (part === '..') {
+      normalizedParts.pop();
+    } else if (part !== '.' && part !== '') {
+      normalizedParts.push(part);
+    }
+  }
+
+  const normalizedPath = normalizedParts.join('/');
+
+  // Handle absolute paths by adding a leading '/'
+  return isAbsolute ? `/${normalizedPath}` : normalizedPath;
 }
+
+
 export async function uploadImage(
   localFilePath = 'D:\\Android_Learn\\AwesomeProject\\src\\asset\\avatar.jpg',
 ) {
   try {
     // 生成随机图片名，保留后缀一致
-    const randomImageName = generateRandomString(32)
+    const randomImageName = generateRandomString()
     const fileExtension = getFileExtension(localFilePath)
     const randomImageKey = `${randomImageName}${fileExtension}`
     // 填写OSS文件完整路径和本地文件的完整路径。OSS文件完整路径中不能包含Bucket名称。
     // 如果本地文件的完整路径中未指定本地路径，则默认从示例程序所属项目对应本地路径中上传文件。
     const result = await client.put(
       randomImageKey,
-      path.normalize(localFilePath),
+      normalizePath(localFilePath),
     )
-    const url = generateSignedUrl(result.name, 3600 * 24 * 14)
-    console.log(url)
+    const url = await generateSignedUrl(result.name, 3600 * 24 * 14)
+    console.log(url,'testOk')
     return url
   } catch (e) {
     console.log(e)

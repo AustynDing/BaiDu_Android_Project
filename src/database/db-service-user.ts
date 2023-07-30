@@ -60,7 +60,7 @@ const updateField = async (
   try {
     const results = await db.executeSql(query, [value, username])
     if (results[0].rowsAffected > 0) {
-      console.log(`成功更新 ${fieldName}!`)
+      console.log(`成功更新 ${fieldName},${value}!`)
     } else {
       console.log('未更新任何数据，可能没有匹配的记录。')
     }
@@ -72,12 +72,13 @@ const updateField = async (
 
 // 更新 avatarUrl
 export const updateAvatarUrl = async (avatarUrl: string, username: string) => {
-  return updateField('avatarUrl', avatarUrl, username)
+  return await updateField('avatarUrl', avatarUrl, username)
 }
 
 // 更新 nickname
 export const updateNickname = async (nickname: string, username: string) => {
-  return updateField('nickname', nickname, username)
+  console.log(nickname)
+  return await updateField('nickname', nickname, username)
 }
 
 // getUserInfo 函数，通过 username 查找用户信息
