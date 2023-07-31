@@ -209,7 +209,7 @@ function RightBar({
           width: '100%',
         }}
       >
-        <Avatar rounded source={{ uri: uploaderAvatar }} size={45} />
+        <Avatar rounded source={require('../asset/avatar.jpg')} size={45} />
       </View>
       <TouchableOpacity
         activeOpacity={1}
