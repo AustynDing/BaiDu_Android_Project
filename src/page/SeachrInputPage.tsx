@@ -11,6 +11,7 @@ export function SearchInputPage() {
   const [searchHistory, setSearchHistory] = React.useState<string[]>()
   const webViewRef = React.useRef<WebView | null>(null)
   const searchBarRef = React.useRef<SearchBarRef>(null)
+  const [source, setSource] = React.useState(WebViewConfig.INIT_URL)
   React.useEffect(() => {
     load('searchHistory')
       .then(loadData => {
@@ -44,9 +45,7 @@ export function SearchInputPage() {
   const handleSearchSubmit = (text: string) => {
     const escapedText = text.replace(/[']/g, "\\'").replace(/["]/g, '\\"')
     addSearchHistory(text)
-    webViewRef.current?.injectJavaScript(
-      `window.location.href = 'https://m.baidu.com/s?word=${escapedText}';`,
-    )
+    setSource(`https://m.baidu.com/s?word=${escapedText}`)
   }
 
   return (
@@ -64,7 +63,7 @@ export function SearchInputPage() {
         javaScriptEnabled={true}
         domStorageEnabled={true}
         startInLoadingState={true}
-        source={{ html: WebViewConfig.HTML }}
+        source={{ uri: source }}
         onNavigationStateChange={navState => {
           if (navState.url === WebViewConfig.INIT_URL) {
             toggleVisibility(true)
