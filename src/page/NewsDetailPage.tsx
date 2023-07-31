@@ -74,7 +74,6 @@ export function NewsDetailPage({ route }: { route: any }) {
       <HeaderTab>
         {show && (
           <AuthorBar
-            ref={targetRef}
             medium={data?.medium}
             type={data?.type}
             commentNum={data?.commentNum}
