@@ -71,7 +71,16 @@ export function NewsDetailPage({ route }: { route: any }) {
     <SkeletonPage num={10} columns={2} />
   ) : (
     <View style={styles.container}>
-      <HeaderTab>{show && <AuthorBar />}</HeaderTab>
+      <HeaderTab>
+        {show && (
+          <AuthorBar
+            ref={targetRef}
+            medium={data?.medium}
+            type={data?.type}
+            commentNum={data?.commentNum}
+          />
+        )}
+      </HeaderTab>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.scrollView}

@@ -105,7 +105,7 @@ function VideoPreviewBottomTab(
     <View style={styles.bottomTabContainer}>
       {/* 上传者头像和昵称 */}
       <View style={styles.uploaderContainer}>
-        <Avatar rounded source={{ uri: uploaderAvatar }} />
+        <Avatar rounded source={require('../asset/avatar.jpg')} />
         <Text style={styles.uploaderText}>{uploaderNickname}</Text>
       </View>
       {/* 底部选项卡内容 */}

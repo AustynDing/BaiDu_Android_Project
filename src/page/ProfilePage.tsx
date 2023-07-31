@@ -194,10 +194,7 @@ function UploadPhotoContainer() {
             height: 100,
             borderRadius: 999,
           }}
-          source={{
-            uri:
-              response && response.assets ? response.assets[0].uri : initAvatar,
-          }}
+          source={{uri: initAvatar}}
         />
       </TouchableOpacity>
     </View>
