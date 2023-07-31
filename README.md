@@ -1,6 +1,8 @@
 
 # Final Project
 
+apk路径：`android\app\build\outputs\apk\release\app-release.apk`
+
 ## 准备工作
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
