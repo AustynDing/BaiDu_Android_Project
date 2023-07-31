@@ -1,74 +1,102 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
+# Final Project
+
+## 准备工作
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
-## Step 1: Start the Metro Server
-
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
-
+### Step 1: Start the Metro Server
 ```bash
 # using npm
 npm start
-
 # OR using Yarn
 yarn start
 ```
-
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
+### Step 2: Start your Application
 ```bash
 # using npm
 npm run android
-
 # OR using Yarn
 yarn android
 ```
 
-### For iOS
+## 功能介绍
 
-```bash
-# using npm
-npm run ios
+### 天气页`WeatherPage`
 
-# OR using Yarn
-yarn ios
-```
+- 主页面的天气框和天气页使用了统一的假数据`weatherData`
+- 完成了横向滑动的每小时天气预报
+- 实现了反映空气质量指数的动态线形条，可以修改`weatherData`中的数据来测试
+- 此处的`loading`效果迁移到了`newslist`新闻列表的渲染上
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+#### 改善点
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+- 使用天气预报的相关API动态的获取数据
+- 根据白天/晚上+不同天气的排列组合，动态的给出天气的背景图和改变`Container` 的背景颜色
 
-## Step 3: Modifying your App
+### 新闻添加页`NewsAddPage`
 
-Now that you have successfully run the app, let's modify it.
+- 使用`useContext`和`uesReducer`完成了对表格数据的整体管理
+- 实现了对空数据的检查和`Toast`的提示
+- 实现了数据的持久化，和主页面的`NewsList`使用了同一数据表
+- 实现了图片的上传和删除
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+#### 改善点
+- 对`form`的处理不够抽象，无法抽象出一个`Form`组件进行统一的管理
+- 对数据输入的限制可以增强，例如对特殊符号、特殊字段、字数等进行限制
+- 对业务的处理不够完善，新闻列表中应该有多种新闻「有略缩图和无略缩图的」+「置顶/热点/普通」。事实上需要更加运营情况+流量反映+舆情处理等多方面对新闻进行排序、展示，而不是通过普通的选择进行
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
 
-## Congratulations! :tada:
+### 主页面`HomePage`
 
-You've successfully run and modified your React Native App. :partying_face:
+- 实现了搜索框的吸顶效果 **（需要人为添加多篇新闻后才可以实现）**
+- 实现了首屏渲染时的骨架屏页面展示（需要人为添加多篇新闻后，重新加载后可以看到效果）
+- 实现了`NewsList`和`NewsDetailPage`的数据持久化-新闻详情页中可以展示出新闻列表的具体信息，是统一的
+  
+#### 改善点
+- 对列表的数据处理没有进行分页请求，会导致一次性请求数据过多，耗时过长
+- 对列表可以进行虚拟滚动渲染，防止数据渲染过多造成卡顿现象
+  
+### 新闻详情页`NewsDetailPage`
+- 实现了长新闻浏览时的吸顶效果 **（因此在新闻添加的时候需要使用长文本进行添加）**
+- 实现了摘要内容的展示
 
-### Now what?
+### 短视频预览页`VideoPreviewPage`
+- 实现了搜索框的吸顶效果
+- 实现了点赞、关注的icon的变化
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+#### 改善点
+- 和新闻列表页的改善点一致
+- 实现数据持久化，和短视频播放页的顺序一致
+- 实现滚动时的按需加载 + 下拉刷新
 
-# Troubleshooting
+### 短视频播放页`VideoPlayPage`
+- 实现了视频加载的提示
+- 实现了短视频的全屏播放
+- 实现了流畅的滚动播放功能（刷过的视频会被强制暂停）
+- 实现了收藏icon的变化
+- 实现了顶部和底部蒙层的效果
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+#### 改善点
+- 信息流的持久化（例如收藏、评论）
+- 业务上的链路完善（上传视频 - 浏览视频 - 收藏/评论/分享视频 - 受到启发继续上传）
 
-# dependencies
+### 搜索页`SearchInputPage`
+- 实现了历史搜索的记录（上限展示9个） **（需要在顶部搜索框而非百度页面内的搜索框进行搜索）**
+- 实现了页面的前进后退功能 **（需要在顶部搜索框而非百度页面内的搜索框进行搜索）**
+- 实现了搜索框内容和前进后退同步的功能 **（需要在顶部搜索框而非百度页面内的搜索框进行搜索）**
+- 实现了回退主页的功能
+
+
+### 个人页`ProfilePage`
+
+- 实现了个人信息的持久化（此处初始化了个人信息）
+- 可以修改头像和昵称
+
+#### 改善点
+- 通过完善注册、登录功能对头像和用户名和昵称进行初始化
+
+## 依赖
 ```json
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.19.1",  // 用于实现搜索历史记录的缓存
@@ -93,23 +121,3 @@ If you can't get this to work, see the [Troubleshooting](https://reactnative.dev
     "uuid": "^9.0.0"
   },
 ```
-# FinalProject
-
-#### 介绍
-大作业
-
-#### 软件架构
-软件架构说明
-
-
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
