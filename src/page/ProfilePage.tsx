@@ -193,6 +193,7 @@ function UploadPhotoContainer() {
             width: 100,
             height: 100,
             borderRadius: 999,
+            backgroundColor:'#B0B1B3'
           }}
           source={{uri: initAvatar}}
         />
